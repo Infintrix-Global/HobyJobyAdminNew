@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "hobyjoby-8b9ca"
+  },
+  "targets": {
+    "hobyjoby-8b9ca": {
+      "hosting": {
+        "master": [
+          "masterpanel-1"
+        ],
+        "masterpanel": [
+          "masterpanel-1.web.app"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
