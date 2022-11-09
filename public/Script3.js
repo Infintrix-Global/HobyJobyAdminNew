@@ -4,9 +4,8 @@
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
+   //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
-
-
 
 
    var today = new Date();
@@ -121,8 +120,8 @@ var tbody= document.getElementById("tbody1");
       btn.onclick = function () {
         var result = confirm("Are you sure you want to delete this Certification Details?");
         if (result) {
-        deleteDoc(doc(db, "JobConfig", "Master","Certifications",num));
-        setTimeout("location.reload(true);",3000);
+        //deleteDoc(doc(db, "JobConfig", "Master","Certifications",num));
+        //setTimeout("location.reload(true);",3000);
         }
       };
 
@@ -940,10 +939,15 @@ var tbody= document.getElementById("tbody2");
       btnq.onclick = function () {
         var result = confirm("Are you sure you want to Delete Qualification Details?");
         if (result) {
-        deleteDoc(doc(db, "JobConfig", "Master","Qualifiactions",num));
-        setTimeout("location.reload(true);",3000);
+        deleteDoc(doc(db, "JobConfig", "Master","Qualifiactions",num))
+        .then(()=> {  
+          
+          $( "#qualification" ). load(window. location. href + " #qualification" );
+          
+        })     
         }
       };
+
 
       btn2q.onclick = function () {
         var ao = id.toString();
@@ -964,7 +968,8 @@ var tbody= document.getElementById("tbody2");
                            console.log(error);
                         }); 
                         
-          document.getElementById("demo").innerHTML = text;
+          document.getElementById("qualification").innerHTML = text;
+          setTimeout("location.reload(true);",120);
         }
       }; 
       

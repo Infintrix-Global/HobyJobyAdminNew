@@ -53,13 +53,7 @@ $(document).ready(function(){
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
     });
-          </script> 
     
-    
-    
-    
-    
-    <!-- <script>
       function sort_age() 
     {
      var table=$('#myTable');
@@ -91,12 +85,6 @@ $(document).ready(function(){
     
     setTimeout ( "sort_age()", 3000 );
     
-    </script> -->
-    
-    
-    
-    
-    <script>
       
         //   //sort
     
@@ -245,5 +233,4 @@ $(document).ready(function(){
     }
     
     }
-    
-    // setTimeout ( "sort12()", 3000 );
+ 

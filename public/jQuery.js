@@ -57,17 +57,20 @@ $("#menu-toggle9").click(function(e) {
 };
 
 
-function openMaster(evt, mastername) {
-  var i, tabcontent, tablinks;
+ function openMaster(evt, mastername) {
+  var i, tabcontent;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
+   //console.log(tabcontent[i].style.display);
   }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+
+  console.log(tabcontent[0].style.display);
+  
   document.getElementById(mastername).style.display = "block";
+
+  console.log( evt.currentTarget);
+
   evt.currentTarget.className += " active";
 }
       

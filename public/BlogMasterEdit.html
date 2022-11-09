@@ -159,160 +159,188 @@
       </div>
     
     </div>
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>  -->
-<script src="src/fancyTable.js"></script>
-<script>
-$( window ).on("load", function() {
-    setTimeout(async function(){ 
-  $(".blogtable").fancyTable({ 	
-    globalSearch: true,
-    sortable: true,
-    pagination: true, 			
-    perPage:5, 				
-  });
-}, 1000);
-});
-</script>
-
-
+<script type="module">
+    
+    // import EditorJS from '@editorjs/editorjs';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+      import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit , where} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
   
-  <script type="module">
-    
-  // import EditorJS from '@editorjs/editorjs';
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-  apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
-  authDomain: "hobyjoby-8b9ca.firebaseapp.com",
-  projectId: "hobyjoby-8b9ca",
-  storageBucket: "hobyjoby-8b9ca.appspot.com",
-  messagingSenderId: "755782612092",
-  appId: "1:755782612092:web:98ed2fb25735eb435985f9",
-  measurementId: "G-L23JY97GH8"
-};
-    
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const db = getFirestore(app);
-
+      const firebaseConfig = {
+    apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
+    authDomain: "hobyjoby-8b9ca.firebaseapp.com",
+    projectId: "hobyjoby-8b9ca",
+    storageBucket: "hobyjoby-8b9ca.appspot.com",
+    messagingSenderId: "755782612092",
+    appId: "1:755782612092:web:98ed2fb25735eb435985f9",
+    measurementId: "G-L23JY97GH8"
+  };
       
-
-      var today = new Date();
-  
-  var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-  
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  
-  var dateTime = date+' '+time;
-
-  var tbody= document.getElementById("empname");
-  
-  
-      function AddItemToTable(cat,cby,uat){
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
   
         
-          let trow=document.createElement("tr");
-          let td1=document.createElement("td");
-          let td2 = document.createElement("td");
-          var tio = String(uat);
-          
-          td1.innerHTML= cat + " " + cby;
-          var x = document.createElement("INPUT");
-          x.setAttribute("type", "checkbox");
-          x.setAttribute("id", "city");
-          x.setAttribute("name", "info");
-          x.setAttribute("value", tio);
-          td2.appendChild(x);
   
-          trow.appendChild(td1);
-          trow.appendChild(td2);
-          tbody.appendChild(trow);
-      }
-  
-      window.myFunction1 =  async function (){
+        var today = new Date();
+    
+        var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
+        
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        
+        var dateTime = date+' '+time;
+    
+        var tbody= document.getElementById("empname");
 
+        var queryString = window.location.search.substring(1);
+        var varArray = queryString.split("="); //eg. index.html?msg=1
+        var param = varArray[1];
 
-        var type =  CKEDITOR.instances.editor.getData();
-       var content = removeTags(type);
-       
-        //alert(content);
-       // var img = document.getElementById("imgsrc1");
-        // alert(img);    
-        // var dbID;
-        // var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
-        // var querySnapshot1 = await getDocs(q1);
-        // querySnapshot1.forEach((doc) => {
-        //    // doc.data() is never undefined for query doc snapshots
-        //    dbID = parseInt(doc.id)+1;
-        // });
-
-        var head = document.getElementById("textboc").value;
-
-                  var checkboxes = document.getElementById("city").value;
-                  $(document).ready(function() {
-                          var arr = [];
-                          $.each($("input[name='info']:checked"), async function(){
-                              arr.push($(this).val());
-                              // alert($(this).val());
-                              var stringmas = String($(this).val());
-                              await addDoc(collection(db, "BlogMaster"), {
-                                  Description: content,
-                                  Title: head,
-                                  EmployerId: stringmas,
-                                  CreatedAt: dateTime,
-                                  CreatedBy:"1" ,
-                                  UpdatedAt: dateTime,
-                                  UpdatedBy: "1"
-                              })
-                              .then(()=> {  
-                                setTimeout("location.reload(true);",120);
-                              })     
-                              .catch((error)=>{
-                                  console.log(error);
-                              }); 
+        $( window ).on("load", async function() {
       
-                          });
-                  });
-      }
-  
-  
-      window.removeTags = function(str){
-      if ((str===null) || (str===''))
-          return false;
-      else
-          str = str.toString();
-            
-      // Regular expression to identify HTML tags in 
-      // the input string. Replacing the identified 
-      // HTML tag with a null string.
-      return str.replace( /(<([^>]+)>)/ig, '');
-  }
-  
-      function AddAllItemsToTable(certification){
-          tbody.innerHTML="";
-  
-          certification.forEach(element => {
-          AddItemToTable(element.FirstName,element.LastName,element.UserID);    
-          });
-  
-      }
-  var cert=[];
-  var querySnapshot = await getDocs(collection(db, "EmployerMaster"));
-  querySnapshot.forEach((doc) => {
-      cert.push(doc.data());
-    AddAllItemsToTable(cert);
-  
-  });
-  
-  window.Logoutfunc = function(){
-    window.location.replace("index.html");
-  }
-                                                               
-  </script>
 
-  </body>
-</html>
+                var cert=[];
+                var q1 =  query(collection(db, "BlogMaster"),where("id", "==",param ),limit(1));
+                var querySnapshot1 = await getDocs(q1);
+                querySnapshot1.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                    cert.push(doc.data());
+                });
+
+                cert.forEach(element => {
+                    document.getElementById("textboc").value = element.Title;
+                    CKEDITOR.instances.editor.setData(element.Description);
+                });
+                //document.getElementById("textboc").value = title;
+           
+        });
+    
+        
+        var employerID;
+        var cert=[];
+        var q1 =  query(collection(db, "BlogMaster"),where("id", "==",param ),limit(1));
+        var querySnapshot1 = await getDocs(q1);
+        querySnapshot1.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+            cert.push(doc.data());
+        });
+
+        cert.forEach(element => {
+            employerID = element.EmployerId;
+        });
+
+        async function AddItemToTable(cat,cby,uat){
+    
+          
+            let trow=document.createElement("tr");
+            let td1=document.createElement("td");
+            let td2 = document.createElement("td");
+            var tio = String(uat);
+            
+            td1.innerHTML= cat + " " + cby;
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "checkbox");
+            x.setAttribute("id", "city");
+            x.setAttribute("name", "info");
+            x.setAttribute("value", tio);
+
+            if(tio.trim() == employerID.trim()){
+                x.setAttribute("checked",true);
+            }
+            td2.appendChild(x);
+    
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            tbody.appendChild(trow);
+                
+        }
+
+    
+        window.myFunction1 =  async function (){
+  
+  
+          var type =  CKEDITOR.instances.editor.getData();
+          var content = removeTags(type);
+         
+          //alert(content);
+         // var img = document.getElementById("imgsrc1");
+          // alert(img);    
+          var dbID;
+          var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
+          var querySnapshot1 = await getDocs(q1);
+          querySnapshot1.forEach((doc) => {
+             // doc.data() is never undefined for query doc snapshots
+             dbID = parseInt(doc.id)+1;
+          });
+          var num = dbID.toString();;
+  
+          var head = document.getElementById("textboc").value;
+  
+                    var checkboxes = document.getElementById("city").value;
+                    $(document).ready(function() {
+                            var arr = [];
+                            $.each($("input[name='info']:checked"), function(){
+                                arr.push($(this).val());
+                                // alert($(this).val());
+                                var stringmas = String($(this).val());
+                                setDoc(doc(db, "BlogMaster", num), {
+                                    Description: content,
+                                    Title: head,
+                                    EmployerId: stringmas,
+                                    CreatedAt: dateTime,
+                                    CreatedBy:"1" ,
+                                    UpdatedAt: dateTime,
+                                    UpdatedBy: "1",
+                                    id: num,
+                                })
+                                .then(()=> {  
+                                  setTimeout("location.href = 'BlogMasterList.html'",120);
+                                })     
+                                .catch((error)=>{
+                                    console.log(error);
+                                }); 
+        
+                            });
+                    });
+        }
+    
+    
+        window.removeTags = function(str){
+        if ((str===null) || (str===''))
+            return false;
+        else
+            str = str.toString();
+              
+        // Regular expression to identify HTML tags in 
+        // the input string. Replacing the identified 
+        // HTML tag with a null string.
+        return str.replace( /(<([^>]+)>)/ig, '');
+    }
+    
+        function AddAllItemsToTable(certification){
+            tbody.innerHTML="";
+    
+            certification.forEach(element => {
+            AddItemToTable(element.FirstName,element.LastName,element.UserID);    
+            });
+    
+        }
+    var cert=[];
+    var querySnapshot = await getDocs(collection(db, "EmployerMaster"));
+    querySnapshot.forEach((doc) => {
+        cert.push(doc.data());
+       // console.log(doc.data());
+      AddAllItemsToTable(cert);
+    
+    });
+    
+    window.Logoutfunc = function(){
+      window.location.replace("index.html");
+    }
+                                                                 
+    </script>
+  
+    </body>
+  </html>
+  
