@@ -90,51 +90,55 @@
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
+              </li>
               
           </ul>
       </div>
 
       <div id="certification" class="tabcontent">
-        <a href="#menu-toggle" style="background-color: #454d55;" class="tgl-btn" id="menu-toggle"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
-        <button type="button" style="color: white;margin-top: 0%;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
+        <a href="#menu-toggle1" style="background-color: #454d55;"  class="tgl-btn" id="menu-toggle1"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
+        <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
         <div id="page-content-wrapper">
           <div class="m-1">
-                <button type="button" class="btn add-btn" onclick="myFunction()" style="color: white;margin-top: 55px;margin-right: 16px;"><i class="fa fa-plus"></i> Add New</button>
-              </div>
-              <div class="container-fluid">
-                <!-- <div class="card"> -->
-            <table id="myCertiTable" class="table myCertiTable">
-              <h1 style="color: white;">Certification</h1>  
-              <!-- <input type='text' id='txt_searchall' style="float: right;margin-right: 10px;margin-top: 15px;" placeholder='Enter search text'> -->
-                <!-- <input type="hidden" id="age_order" value="asc"> -->
-                <thead>
-                    <tr style="color: white; /*border-top: 1px white !important;*/">
-                        <!-- <th data-field="id" style="color: white;width: 10px;" data-sortas="numeric">Number</th>-->
-                        <!-- <th>Created At</th>
-                        <th id="examp">Created By</th>
-                        <th>Updated At</th>
-                         <th>Updated By</th> -->
-                        <th data-field="name">Name</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody style="color: white;" class="tbody1" id="tbody1">
-                </tbody>
-            </table>
-          <!-- </div> -->
-            </div>
+            <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="myFunction()"><i class="fa fa-plus"></i> Add New</button>
+          </div>
+          <div class="container-fluid">
+            <h1 style="color: white;">Certification</h1>
+            <table id="myCertiTable" class="table myCertiTable" style="column-width: 1px;">
+              <thead>
+                  <tr style="color: white;">
+                      <!-- <th>Id</th> 
+                      <th>Created At</th>
+                      <th>Created By</th>
+                      <th>Updated At</th>
+                      <th>Updated By</th> -->
+                      <th>Name</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody id="tbody1" class="'tbody1" style="color: white;">
+              </tbody>
+          </table>
+              
+          </div>
         </div>
       </div>
+
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> -->
+      <script src="src/fancyTable.js"></script>
       <script>
-//   $(document).ready(function() { 		
-$( window ).on("load", function() {
+//   $(document).ready(function() { 	
+  
+  $( window ).on("load", function() {
     setTimeout(async function(){ 
   $(".myCertiTable").fancyTable({ 	
     globalSearch: true,
     sortable: true,
     pagination: true, 			
-    perPage:5, 				
+    perPage:5, 	
+    sortColumn: 2,		
   });
 }, 1000);
 });
@@ -142,56 +146,60 @@ $( window ).on("load", function() {
 
 
   
-  <script type="module">
-  // import EditorJS from '@editorjs/editorjs';
-
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-  apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
-  authDomain: "hobyjoby-8b9ca.firebaseapp.com",
-  projectId: "hobyjoby-8b9ca",
-  storageBucket: "hobyjoby-8b9ca.appspot.com",
-  messagingSenderId: "755782612092",
-  appId: "1:755782612092:web:98ed2fb25735eb435985f9",
-  measurementId: "G-L23JY97GH8"
-};
+<script type="module">
     
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const db = getFirestore(app);
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+  import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-      
+  const firebaseConfig = {
+apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
+authDomain: "hobyjoby-8b9ca.firebaseapp.com",
+projectId: "hobyjoby-8b9ca",
+storageBucket: "hobyjoby-8b9ca.appspot.com",
+messagingSenderId: "755782612092",
+appId: "1:755782612092:web:98ed2fb25735eb435985f9",
+measurementId: "G-L23JY97GH8"
+};
+  
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
 
-      var today = new Date();
-  
-  var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-  
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  
-  var dateTime = date+' '+time;
- 
+    var dateTime = new Date().toLocaleString().replace(',','');
   
   window.myFunction = async function () {
     var table = document.getElementById("myCertiTable");
     var a=table.rows.length;
     var b=table.rows.length;
-    var ao = a.toString();
+    var ao;
+    var dbID;
+    var q1 =  query(collection(db, "JobConfig", "Master", "Certifications"),orderBy("id", "desc"),limit(1));
+    var querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        dbID = doc.data().id + 1;
+    });
+    if(dbID == null){
+      ao = 1;
+    }
+    else{
+      ao = dbID;
+    }
     let text;
     let person = prompt("Please enter Certification name:", "Enter...");
     if (person == null || person == "") {
         text = "User cancelled the prompt.";
     } else {
         // alert(person);
-        await addDoc(collection(db, "JobConfig", "Master", "Certifications"), {
+        await setDoc(doc(db, "JobConfig", "Master", "Certifications",ao.toString()), {
                         name: person,
-                        CreatedAt :  dateTime,
+                        CreatedAt :  dateTime.toString(),
                         CreatedBy : "1",
-                        UpdatedAt :  dateTime,
-                        UpdatedBy : "1"
+                        UpdatedAt :  dateTime.toString(),
+                        UpdatedBy : "1",
+                        id: Number(ao)
                     })
                     .then(()=> {  
                     setTimeout("location.reload(true);",120);
@@ -204,7 +212,9 @@ $( window ).on("load", function() {
   }
   
   window.Logoutfunc = function(){
+    alert("User has been Logged out successfully.");
     window.location.replace("index.html");
+
   }
                                                       
   </script>

@@ -2,19 +2,13 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,setDoc, updateDoc, getDocs, collection, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
-
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
+    var dateTime = new Date().toLocaleString().replace(',','');
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -97,7 +91,7 @@
       var num = String(cat);
 
       btnc.onclick = function () {
-        var result = confirm("Are you sure you want to Delete City with Id " + num);
+        var result = confirm("Are you sure you want to Delete City?");
         if (result) {
         deleteDoc(doc(db, "JobConfig", "Master","Cities",num))
         .then(()=> {  
@@ -117,10 +111,12 @@ if (person == null || person == "") {
   if (person1 == null || person1 == "") {
     text = "User cancelled the prompt.";
   } else {
-    setDoc(doc(db, "JobConfig", "Master", "Cities", num), {
+    updateDoc(doc(db, "JobConfig", "Master", "Cities", num), {
                 City: person,
+                UpdatedAt :  dateTime.toString(),
+                UpdatedBy : "1",
                 State:person1,
-                id : num,
+                id : Number(cat),
                 })
                 .then(()=> {  
                   setTimeout("location.reload(true);",120);
@@ -156,24 +152,23 @@ if (person == null || person == "") {
       // timeFunction1();
   }
 
-  function AddAllItemsToTable4(qualification,id){
+  function AddAllItemsToTable4(qualification){
       tbody.innerHTML="";
 
-      qualification.forEach((element,i) => {
-      AddItemToTable4(id[i],element.City,element.State);    
+      qualification.forEach((element) => {
+      AddItemToTable4(element.id,element.City,element.State);    
       });
   }
 
 var cert=[];
 var id=[];
-var q11 = query(collection(db, "JobConfig", "Master", "Cities"),where("State", "==", "Gujarat"));
+var q11 =  query(collection(db, "JobConfig", "Master", "Cities"),orderBy("UpdatedAt", "desc"));
 var querySnapshot11 = await getDocs(q11);
 querySnapshot11.forEach((doc) => {
 // doc.data() is never undefined for query doc snapshots
 //console.log(doc.id, " => ", doc.data());
   cert.push(doc.data());
-  id.push(doc.id);
-AddAllItemsToTable4(cert,id);
+AddAllItemsToTable4(cert);
 });
 
 function timeFunction1() {

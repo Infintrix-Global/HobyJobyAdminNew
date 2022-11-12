@@ -2,19 +2,13 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,setDoc, updateDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
-
-   var today = new Date();
-
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
    
-   var dateTime = date+' '+time;
+   var dateTime = new Date().toLocaleString().replace(',','');
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -50,7 +44,7 @@ var tbody= document.getElementById("tbody2");
         // let td5=document.createElement("td");
         let td6=document.createElement("td");
         let td7=document.createElement("td");
-
+     
         let btnq=document.createElement("button");
         btnq.setAttribute("id", "delQ");
         btnq.setAttribute("class", "pooa");
@@ -78,6 +72,8 @@ var tbody= document.getElementById("tbody2");
         // td5.innerHTML=uby;
         td6.innerHTML=name;
 
+        
+
 
        //trow.appendChild(td1);
        // trow.appendChild(td2);
@@ -86,7 +82,7 @@ var tbody= document.getElementById("tbody2");
         // trow.appendChild(td5);
         trow.appendChild(td6);
         trow.appendChild(td7);
-
+       
         tbody.appendChild(trow);
 
 
@@ -140,13 +136,11 @@ var tbody= document.getElementById("tbody2");
           text = "User cancelled the prompt.";
         } else {
           // alert(person);
-          setDoc(doc(db, "JobConfig", "Master", "Qualifiactions", ao), {
+          updateDoc(doc(db, "JobConfig", "Master", "Qualifiactions", ao), {
                           name: person,
-                          CreatedAt :  dateTime,
-                          CreatedBy : "1",
-                          UpdatedAt :  dateTime,
+                          UpdatedAt :  dateTime.toString(),
                           UpdatedBy : "1",
-                          id : ao,
+                          id : Number(id),
                         })
                         .then(()=> {  
                           setTimeout("location.reload(true);",120);
@@ -159,25 +153,25 @@ var tbody= document.getElementById("tbody2");
     
     }
 
-    function AddAllItemsToTable1(qualification,id){
+    function AddAllItemsToTable1(qualification){
         tbody.innerHTML="";
-        qualification.forEach((element,i) => {
-        AddItemToTable1(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,id[i],element.name);    
+        qualification.forEach((element) => {
+        AddItemToTable1(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id,element.name);    
       });
     }
 
 var cert=[];
 var id=[];
-var querySnapshot1 =  await getDocs(collection(db, "JobConfig", "Master", "Qualifiactions"),limit(2),{ includeMetadataChanges: true });
+var q1 =  query(collection(db, "JobConfig", "Master", "Qualifiactions"),orderBy("UpdatedAt", "desc"));
+var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
     cert.push(doc.data());
-    id.push(doc.id);
 
    // console.log(doc.id);
     //console.log(doc.data());
-    AddAllItemsToTable1(cert,id);
+    AddAllItemsToTable1(cert);
 
 });
 

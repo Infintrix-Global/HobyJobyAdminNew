@@ -1,110 +1,103 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { doc, deleteDoc,setDoc, updateDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-   import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-
-   //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
-  //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
+//import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
+//  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
+var dateTime = new Date().toLocaleString().replace(',','');
 
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
+const firebaseConfig = {
+ apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
+ authDomain: "hobyjoby-8b9ca.firebaseapp.com",
+ projectId: "hobyjoby-8b9ca",
+ storageBucket: "hobyjoby-8b9ca.appspot.com",
+ messagingSenderId: "755782612092",
+ appId: "1:755782612092:web:98ed2fb25735eb435985f9",
+ measurementId: "G-L23JY97GH8"
+};
 
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
-   const firebaseConfig = {
-    apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
-    authDomain: "hobyjoby-8b9ca.firebaseapp.com",
-    projectId: "hobyjoby-8b9ca",
-    storageBucket: "hobyjoby-8b9ca.appspot.com",
-    messagingSenderId: "755782612092",
-    appId: "1:755782612092:web:98ed2fb25735eb435985f9",
-    measurementId: "G-L23JY97GH8"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-
-  var tbody= document.getElementById("tbody5");
 
   var tbody= document.getElementById("tbody1");
 
 
   function AddItemToTable(cat,cby,uat,uby,id,name){
 
-    
       let trow=document.createElement("tr");
       //let td1=document.createElement("td");
       //let td2=document.createElement("td");
       // let td3=document.createElement("td");
-      //let td4=document.createElement("td");
+     // let td4=document.createElement("td");
       // let td5=document.createElement("td");
       let td6=document.createElement("td");
       let td7=document.createElement("td");
-
+   
       let btn=document.createElement("button");
-      btn.setAttribute("id", "Div4");
-      btn.setAttribute("class", "tru");
+      btn.setAttribute("id", "delQ");
+      btn.setAttribute("class", "pooa");
       btn.innerHTML = '<i class="fa fa-trash-o"></i>';
       td7.appendChild(btn);
 
+
       let btn2 = document.createElement("button");
-      btn2.setAttribute("id", "Div5");
-      btn2.setAttribute("class", "ufgi");
+      btn2.setAttribute("id", "editQ");
+      btn2.setAttribute("class", "csjs");
       btn2.innerHTML = '<i class="fas fa-edit"></i>';
       td7.appendChild(btn2);
 
-      // let btn3 = document.createElement("button");
-      // btn3.setAttribute("id", "Div6");
-      // btn3.setAttribute("class", "uopd");
-      // btn3.innerHTML = '<i class="fa fa-save"></i>';
-      // td7.appendChild(btn3);
+      // let btn3q = document.createElement("button");
+      // btn3q.setAttribute("id", "Saveq");
+      // btn3q.setAttribute("class", "cwsq");
+      // btn3q.innerHTML = '<i class="fa fa-save"></i>';
+      // td7.appendChild(btn3q);
+      
 
-      //td1.innerHTML= id ;
-      //td2.innerHTML=cat ;
-      // td3.innerHTML= cby;
-      //td4.innerHTML=uat ;
+     // td1.innerHTML= id ;
+     // td2.innerHTML=cat ;
+      // td3.innerHTML= cby ;
+     // td4.innerHTML=uat ;
       // td5.innerHTML=uby;
       td6.innerHTML=name;
-      td6.setAttribute("id", "colorchg");
+
       
 
 
-
-      //trow.appendChild(td1);
-      //trow.appendChild(td2);
+     //trow.appendChild(td1);
+     // trow.appendChild(td2);
       // trow.appendChild(td3);
       //trow.appendChild(td4);
       // trow.appendChild(td5);
       trow.appendChild(td6);
       trow.appendChild(td7);
+     
       tbody.appendChild(trow);
 
-   
+
 
       $(document).ready(function() {
-        $("#Div4").css("background-color", "red");
-        $("#Div4").css("color", "white");
-        $("#Div4").css("border-color", "white");
+        $("#delQ").css("background-color", "red");
+        $("#delQ").css("color", "white");
+        $("#delQ").css("border-color", "white");
 
-        $(".tru").css("background-color", "red");
-        $(".tru").css("color", "white");
-        $(".tru").css("border-color", "white");
+        $(".pooa").css("background-color", "red");
+        $(".pooa").css("color", "white");
+        $(".pooa").css("border-color", "white");
       });
       $(document).ready(function() {
-        $("#Div5").css("background-color", "red");
-        $("#Div5").css("color", "white");
-        $("#Div5").css("border-color", "white");
+        $("#editQ").css("background-color", "red");
+        $("#editQ").css("color", "white");
+        $("#editQ").css("border-color", "white");
 
-        $(".ufgi").css("background-color", "red");
-        $(".ufgi").css("color", "white");
-        $(".ufgi").css("border-color", "white");
-    });
+        $(".csjs").css("background-color", "red");
+        $(".csjs").css("color", "white");
+        $(".csjs").css("border-color", "white");
+      });
     //   $(document).ready(function() {
     //     $("#Div6").css("background-color", "red");
     //     $("#Div6").css("color", "white");
@@ -132,22 +125,20 @@
       // td6.contentEditable = true;
       var table = document.getElementById("myCertiTable");
       var a=table.rows.length;
-            var b=table.rows.length;
-          var ao = a.toString();
-          var tio = String(id);
+      var b=table.rows.length;
+      var ao = a.toString();
+      var tio = String(id);
     let text;
     let person = prompt("Please enter Certification name:", name);
     if (person == null || person == "") {
       text = "User cancelled the prompt.";
     } else {
       // alert(person);
-      setDoc(doc(db, "JobConfig", "Master", "Certifications", tio), {
+      updateDoc(doc(db, "JobConfig", "Master", "Certifications", tio), {
                       name: person,
-                      CreatedAt :  dateTime,
-                      CreatedBy : "1",
-                      UpdatedAt :  dateTime,
+                      UpdatedAt :  dateTime.toString(),
                       UpdatedBy : "1",
-                      id : tio,
+                      id : Number(id),
                     })
                     .then(()=> {  
                       setTimeout("location.reload(true);",120);
@@ -180,27 +171,28 @@
     //   // setTimeout("location.reload(true);",3000);
     // }; 
   }
+  
 
-  function AddAllItemsToTable(certification,id){
+  function AddAllItemsToTable(certification){
       tbody.innerHTML="";
 
-      certification.forEach((element,i) => {
-      AddItemToTable(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,id[i],element.name);    
+      certification.forEach((element) => {
+      AddItemToTable(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id,element.name);    
       });
 
   }
-  setTimeout(AddItemToTable, 3000);
 var cert=[];
 var id=[];
-var querySnapshot = query(collection(db, "JobConfig", "Master", "Certifications"));
-const q = await getDocs(querySnapshot);
-q.forEach((doc) => {
-  cert.push(doc.data());
-  id.push(doc.id);
+var q1 =  query(collection(db, "JobConfig", "Master", "Certifications"),orderBy("UpdatedAt", "desc"));
+var querySnapshot =  await getDocs(q1);
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  //console.log(doc.id, " => ", doc.data());
+    cert.push(doc.data());
 
  // console.log(doc.id);
   //console.log(doc.data());
-  AddAllItemsToTable(cert,id);
+  AddAllItemsToTable(cert);
 
 });
 

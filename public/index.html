@@ -50,6 +50,8 @@ document.getElementById("submit1").addEventListener("click", function() {
         var  pass = document.getElementById("validationCustom02").value;
         console.log(String(cert[0]));
         if(email == String(cert[0]) && pass == String(cert[1])){
+          sessionStorage.setItem("Name", String(cert[0]));
+          sessionStorage.setItem("Password", String(cert[1]));
             window.location.replace("Certification.html");
         }else{
           alert("The Password or the email entered is incorrect");

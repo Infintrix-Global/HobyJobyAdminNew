@@ -91,6 +91,9 @@
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
+              </li>
               
           </ul>
       </div>
@@ -173,6 +176,14 @@ $( window ).on("load", function() {
   });
 }, 1000);
 });
+
+function ckChange(el) {
+  var ckName = document.getElementsByName(el.name);
+  for (var i = 0, c; c = ckName[i]; i++) {
+   c.disabled = !(!el.checked || c === el);
+  }
+}
+
 </script>
 
 
@@ -200,14 +211,7 @@ $( window ).on("load", function() {
       const db = getFirestore(app);
 
       
-
-      var today = new Date();
-  
-  var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-  
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  
-  var dateTime = date+' '+time;
+  var dateTime = new Date().toLocaleString().replace(',','');
 
   var tbody= document.getElementById("empname");
   
@@ -226,6 +230,7 @@ $( window ).on("load", function() {
           x.setAttribute("id", "city");
           x.setAttribute("name", "info");
           x.setAttribute("value", tio);
+          x.setAttribute("onClick","ckChange(this)")
           td2.appendChild(x);
   
           trow.appendChild(td1);
@@ -237,45 +242,66 @@ $( window ).on("load", function() {
 
 
         var type =  CKEDITOR.instances.editor.getData();
-       var content = removeTags(type);
+        var content = removeTags(type);
        
-        //alert(content);
-       // var img = document.getElementById("imgsrc1");
-        // alert(img);    
-        // var dbID;
-        // var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
-        // var querySnapshot1 = await getDocs(q1);
-        // querySnapshot1.forEach((doc) => {
-        //    // doc.data() is never undefined for query doc snapshots
-        //    dbID = parseInt(doc.id)+1;
-        // });
+        var ao;
+        var dbID;
+        var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
+        var querySnapshot1 = await getDocs(q1);
+        querySnapshot1.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            dbID = doc.data().id + 1;
+        });
+        if(dbID == null){
+          ao = 1;
+        }
+        else{
+          ao = dbID;
+        }
 
         var head = document.getElementById("textboc").value;
 
                   var checkboxes = document.getElementById("city").value;
                   $(document).ready(function() {
                           var arr = [];
-                          $.each($("input[name='info']:checked"), async function(){
-                              arr.push($(this).val());
-                              // alert($(this).val());
-                              var stringmas = String($(this).val());
-                              await addDoc(collection(db, "BlogMaster"), {
-                                  Description: content,
-                                  Title: head,
-                                  EmployerId: stringmas,
-                                  CreatedAt: dateTime,
-                                  CreatedBy:"1" ,
-                                  UpdatedAt: dateTime,
-                                  UpdatedBy: "1"
-                              })
-                              .then(()=> {  
-                                setTimeout("location.reload(true);",120);
-                              })     
-                              .catch((error)=>{
-                                  console.log(error);
-                              }); 
-      
-                          });
+                          var checkboxs=document.getElementsByName("info");
+                          var okay=false;
+                          for(var i=0,l=checkboxs.length;i<l;i++)
+                          {
+                              if(checkboxs[i].checked)
+                              {
+                                  okay=true;
+                                  break;
+                              }
+                          }
+
+                          if(okay){
+                              $.each($("input[name='info']:checked"), async function(){
+                                  arr.push($(this).val());
+                                  // alert($(this).val());
+                                  var stringmas = String($(this).val());
+                                  await setDoc(doc(db, "BlogMaster",ao.toString()), {
+                                      Description: content,
+                                      Title: head,
+                                      EmployerId: stringmas,
+                                      CreatedAt: dateTime.toString(),
+                                      CreatedBy:"1" ,
+                                      UpdatedAt: dateTime.toString(),
+                                      UpdatedBy: "1",
+                                      id: ao
+                                  })
+                                  .then(()=> {  
+                                    setTimeout("location.href = 'BlogMasterList.html'",120);
+                                  })     
+                                  .catch((error)=>{
+                                      console.log(error);
+                                  }); 
+          
+                              });
+                           }
+                          else{
+                            alert("Please Select At least ONe Employer");
+                          }
                   });
       }
   
@@ -309,7 +335,9 @@ $( window ).on("load", function() {
   });
   
   window.Logoutfunc = function(){
+    alert("User has been Logged out successfully.");
     window.location.replace("index.html");
+
   }
                                                                
   </script>

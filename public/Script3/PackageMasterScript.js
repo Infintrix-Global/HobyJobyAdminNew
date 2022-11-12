@@ -2,19 +2,13 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,updateDoc, getDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
-
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
+  var dateTime = new Date().toLocaleString().replace(',','');
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -125,7 +119,7 @@
       var num = String(cat);
 
       btnpa.onclick = function () {
-        var result = confirm("Are you sure you want to Delete Package Master with Id " + num);
+        var result = confirm("Are you sure you want to Delete this package:");
         if (result) {
           deleteDoc(doc(db, "JobConfig", "Master","PackageMaster",num))
           .then(()=> {  
@@ -136,27 +130,25 @@
 
       btn2pa.onclick = function () {
         let text;
-        let person = prompt("Please enter PackageMaster PackageName:", cby);
+        let person = prompt("Please enter Package Name:", cby);
         if (person == null || person == "") {
           text = "User cancelled the prompt.";
         } else {
-          let person1 = prompt("Please enter PackageMasteron Featurescolumns:", uat);
-          let person2 = prompt("Please enter PackageMasteron Validity:", ugz);
-          let person3 = prompt("Please enter PackageMasteron Price:",uby);
+          let person1 = prompt("Please enter Package Features:", uat);
+          let person2 = prompt("Please enter Package Validity:", ugz);
+          let person3 = prompt("Please enter Package Price:",uby);
       
       
           if (person == null || person == "") {
           text = "User cancelled the prompt.";
         } else {
-          setDoc(doc(db, "JobConfig", "Master", "PackageMaster", num), {
+          updateDoc(doc(db, "JobConfig", "Master", "PackageMaster", num), {
                           PackageName: person,
                           featurescolumns:person1,
                           price:person3,
                           validity:person2,
-                          id : num,
-                          CreatedAt:dateTime,
-                          CreatedBy: "1",
-                          UpdatedAt: dateTime,
+                          id : Number(cat),
+                          UpdatedAt: dateTime.toString(),
                           UpdatedBy: "1"
                         })
                         .then(()=> {  
@@ -183,23 +175,23 @@
 
   }
 
-  function AddAllItemsToTable9(qualification,id){
+  function AddAllItemsToTable9(qualification){
       tbody.innerHTML="";
 
-      qualification.forEach((element,i) => {
-      AddItemToTable9(id[i],element.PackageName,element.featurescolumns,element.price,element.validity,element.CreatedBy,element.UpdatedBy);    
+      qualification.forEach((element) => {
+      AddItemToTable9(element.id,element.PackageName,element.featurescolumns,element.price,element.validity,element.CreatedBy,element.UpdatedBy);    
       });
   }
 
   var cert=[];
   var id=[];
-var querySnapshot1 = await getDocs(collection(db, "JobConfig", "Master", "PackageMaster"),limit(2));
+  var q1 =  query(collection(db, "JobConfig", "Master", "PackageMaster"),orderBy("UpdatedAt", "desc"));
+var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
     cert.push(doc.data());
-    id.push(doc.id);
-    AddAllItemsToTable9(cert,id);
+    AddAllItemsToTable9(cert);
 });
 
 

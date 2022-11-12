@@ -2,19 +2,13 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,updateDoc, getDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
-
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
+   var dateTime = new Date().toLocaleString().replace(',','');
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -124,7 +118,7 @@ var tbody= document.getElementById("tbody3");
         var num = String(id);
 
       btns.onclick = function () {
-        var result = confirm("Are you sure you want to Delete Skill with Id " + num);
+        var result = confirm("Are you sure you want to Delete this skill: ");
         if (result) {
         deleteDoc(doc(db, "JobConfig", "Master","Skills",num)) .then(()=> {  
           setTimeout("location.reload(true);",120);
@@ -139,13 +133,11 @@ var tbody= document.getElementById("tbody3");
           text = "User cancelled the prompt.";
         } else {
           // alert(person);
-          setDoc(doc(db, "JobConfig", "Master", "Skills", num), {
+          updateDoc(doc(db, "JobConfig", "Master", "Skills", num), {
                           name: person,
-                          CreatedAt :  dateTime,
-                          CreatedBy : "1",
-                          UpdatedAt :  dateTime,
+                          UpdatedAt :  dateTime.toString(),
                           UpdatedBy : "1",
-                          id : num,
+                          id : Number(id),
                         })
                         .then(()=> {  
                           setTimeout("location.reload(true);",120);
@@ -180,23 +172,23 @@ var tbody= document.getElementById("tbody3");
       // }; 
     }
 
-    function AddAllItemsToTable2(qualification,id){
+    function AddAllItemsToTable2(qualification){
         tbody.innerHTML="";
 
-        qualification.forEach((element,i) => {
-        AddItemToTable2(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,id[i],element.name);    
+        qualification.forEach((element) => {
+        AddItemToTable2(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id,element.name);    
         });
     }
 
 var cert=[];
 var id=[];
-var querySnapshot1 = await getDocs(collection(db, "JobConfig", "Master", "Skills"),limit(2));
+var q1 =  query(collection(db, "JobConfig", "Master", "Skills"),orderBy("UpdatedAt", "desc"));
+var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
     cert.push(doc.data());
-    id.push(doc.id);
-  AddAllItemsToTable2(cert,id);
+  AddAllItemsToTable2(cert);
 
 });
 

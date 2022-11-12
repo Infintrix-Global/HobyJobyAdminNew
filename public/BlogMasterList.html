@@ -85,10 +85,13 @@
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Specialization.html'" id="defaultOpen6">Specialization</button>
               </li>
               <li>
-                <button class="dropbtn" style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="openMaster(event, 'blog')" id="defaultOpen7">Blog Master</button>
+                <button class="dropbtn" style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'BlogMaster.html'" id="defaultOpen7">Blog Master</button>
               </li>
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
+              </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
               </li>
               
           </ul>
@@ -106,18 +109,18 @@
             <!-- <button type="button" class="btn add-btn" onclick="myFunction()"><i class="fa fa-plus"></i> Add New</button> -->
           </div>
           <div class="container-fluid">
-            <h1>Blog Master</h1>
+            <h1>Blog List</h1>
           <table id="myTableblgmas" class="table myTableblgmas" style=" color:white">
             <thead>
                 <tr class="borderclass">
                     <th>Title</th>
                     <th>Description</th>
-                    <th>EmployerId</th>
+                    <th>Employer Name</th>
                      <!--<th>Created At</th>
                     <th>Created By</th> 
                     <th>Updated At</th>
                      <th>Updated By</th> -->
-                    <th>Edit</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="tbodygmas">
@@ -147,8 +150,10 @@ $( window ).on("load", function() {
   
   <script type="module">
 
-  window.Logoutfunc = function(){
+window.Logoutfunc = function(){
+    alert("User has been Logged out successfully.");
     window.location.replace("index.html");
+
   }
                                                                
   </script>

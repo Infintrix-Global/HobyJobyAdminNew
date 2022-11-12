@@ -86,10 +86,13 @@
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Specialization.html'" id="defaultOpen6">Specialization</button>
               </li>
               <li>
-                <button class="dropbtn" style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="openMaster(event, 'blog')" id="defaultOpen7">Blog Master</button>
+                <button class="dropbtn" style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'BlogMaster.html'" id="defaultOpen7">Blog Master</button>
               </li>
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
+              </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
               </li>
               
           </ul>
@@ -165,7 +168,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
       import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-      import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit , where} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+      import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit , where, updateDoc} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
   
       const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -181,55 +184,29 @@
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
   
-        
-  
-        var today = new Date();
-    
-        var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-        
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        
-        var dateTime = date+' '+time;
+        var dateTime = new Date().toLocaleString().replace(',','');
     
         var tbody= document.getElementById("empname");
 
         var queryString = window.location.search.substring(1);
         var varArray = queryString.split("="); //eg. index.html?msg=1
         var param = varArray[1];
-
+  
         $( window ).on("load", async function() {
       
 
-                var cert=[];
-                var q1 =  query(collection(db, "BlogMaster"),where("id", "==",param ),limit(1));
-                var querySnapshot1 = await getDocs(q1);
-                querySnapshot1.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                    cert.push(doc.data());
-                });
-
-                cert.forEach(element => {
-                    document.getElementById("textboc").value = element.Title;
-                    CKEDITOR.instances.editor.setData(element.Description);
-                });
+               // var q1 =  query(collection(db, "BlogMaster"),where("id", "==","fuggAHthAuIfsPmwmrAF"),limit(1));
+                var querySnapshot = await getDoc(doc(db, "BlogMaster",param));
+                document.getElementById("textboc").value = querySnapshot.data().Title;
+                CKEDITOR.instances.editor.setData(querySnapshot.data().Description);
                 //document.getElementById("textboc").value = title;
            
         });
     
         
-        var employerID;
-        var cert=[];
-        var q1 =  query(collection(db, "BlogMaster"),where("id", "==",param ),limit(1));
-        var querySnapshot1 = await getDocs(q1);
-        querySnapshot1.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-            cert.push(doc.data());
-        });
-
-        cert.forEach(element => {
-            employerID = element.EmployerId;
-        });
-
+        var querySnapshot1 = await getDoc(doc(db, "BlogMaster",param));
+        var employerID = querySnapshot1.data().EmployerId;
+        
         async function AddItemToTable(cat,cby,uat){
     
           
@@ -266,16 +243,16 @@
           //alert(content);
          // var img = document.getElementById("imgsrc1");
           // alert(img);    
-          var dbID;
-          var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
-          var querySnapshot1 = await getDocs(q1);
-          querySnapshot1.forEach((doc) => {
-             // doc.data() is never undefined for query doc snapshots
-             dbID = parseInt(doc.id)+1;
-          });
-          var num = dbID.toString();;
+          // var dbID;
+          // var q1 =  query(collection(db, "BlogMaster"),orderBy("id", "desc"),limit(1));
+          // var querySnapshot1 = await getDocs(q1);
+          // querySnapshot1.forEach((doc) => {
+          //    // doc.data() is never undefined for query doc snapshots
+          //    dbID = parseInt(doc.id)+1;
+          // });
+          // var num = dbID.toString();
   
-          var head = document.getElementById("textboc").value;
+           var head = document.getElementById("textboc").value;
   
                     var checkboxes = document.getElementById("city").value;
                     $(document).ready(function() {
@@ -284,15 +261,13 @@
                                 arr.push($(this).val());
                                 // alert($(this).val());
                                 var stringmas = String($(this).val());
-                                setDoc(doc(db, "BlogMaster", num), {
+                                updateDoc(doc(db, "BlogMaster", param.toString()), {
                                     Description: content,
                                     Title: head,
                                     EmployerId: stringmas,
-                                    CreatedAt: dateTime,
-                                    CreatedBy:"1" ,
-                                    UpdatedAt: dateTime,
+                                    UpdatedAt: dateTime.toString(),
                                     UpdatedBy: "1",
-                                    id: num,
+                                    id: Number(param),
                                 })
                                 .then(()=> {  
                                   setTimeout("location.href = 'BlogMasterList.html'",120);
@@ -335,9 +310,11 @@
     
     });
     
-    window.Logoutfunc = function(){
-      window.location.replace("index.html");
-    }
+  window.Logoutfunc = function(){
+    alert("User has been Logged out successfully.");
+    window.location.replace("index.html");
+
+  }
                                                                  
     </script>
   

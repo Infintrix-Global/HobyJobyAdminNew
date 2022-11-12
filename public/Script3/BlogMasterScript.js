@@ -2,19 +2,14 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,setDoc, where, getDocs, getDoc, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
+  var dateTime = new Date().toLocaleString().replace(',','');
 
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -33,8 +28,7 @@
 
 var tbody = document.getElementById("tbodygmas");
 
-function AddItemToTable7(cat,cby,uat,uby,des,empid,tile,id){
-
+ function AddItemToTable7(cat,cby,uat,uby,des,empname,empid,tile,id){
       
   let trow=document.createElement("tr");
   let td1=document.createElement("td");
@@ -66,7 +60,7 @@ function AddItemToTable7(cat,cby,uat,uby,des,empid,tile,id){
 
   td1.innerHTML= tile ;
   td2.innerHTML=des ;
-  td3.innerHTML= empid ;
+  td3.innerHTML= empname ;
   //td4.innerHTML=cat ;
   // td5.innerHTML=cby;
   //td6.innerHTML=uat;
@@ -113,7 +107,7 @@ function AddItemToTable7(cat,cby,uat,uby,des,empid,tile,id){
 var num = id;
 
 btn.onclick = function () {
-  var result = confirm("Are you sure you want to Delete BlogMaster with Id " + num);
+  var result = confirm("Are you sure you want to Delete this Blog:");
   if (result) {
   deleteDoc(doc(db,"BlogMaster",num))
   .then(()=> {  
@@ -128,25 +122,52 @@ btn2.onclick = function () {
 
 
 }
+ function employeeDetails(userID){
+  var q1 =  query(collection(db, "EmployerMaster"),where("UserID", "==", userID));
+  var emp;
+   getDocs(q1)
+  .then(querySnapshot => {
+    querySnapshot.forEach((doc) => {
+      //console.log(doc.data().FirstName);
+      emp = doc.data().FirstName;
+      //
+    });
+ })
+ return emp;
+}
 
-function AddAllItemsToTable7(certification,id){
+ function AddAllItemsToTable7(certification,id,emp){
   tbody.innerHTML="";
-
+//   var firstName;
+//   emp.forEach((element,i) => {
+//     firstName = element.FirstName;
+//   });
+// console.log(firstName);
   certification.forEach((element,i) => {
-  AddItemToTable7(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.Description,element.EmployerId,element.Title, id[i]);    
+  AddItemToTable7(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.Description,emp[i],element.EmployerId,element.Title, id[i]);    
   });
 
 }
 var cert=[];
 var id=[];
-var querySnapshot = await getDocs(collection(db, "BlogMaster"),limit(2));
-querySnapshot.forEach((doc) => {
-cert.push(doc.data());
-id.push(doc.id);
-AddAllItemsToTable7(cert,id);
+var emp=[];
+var q =  query(collection(db, "BlogMaster"),orderBy("UpdatedAt", "desc"));
+var querySnapshot =  await getDocs(q);
+ querySnapshot.forEach(async (doc) => {
+
+  cert.push(doc.data());
+  id.push(doc.id);
+ 
+
+  var q1 = query(collection(db, "EmployerMaster"),where("UserID","==",doc.data().EmployerId));
+  var querySnapshot1 = await getDocs(q1);
+  querySnapshot1.forEach((doc) => {
+    emp.push(doc.data().FirstName.toLocaleString() + " " + doc.data().LastName.toLocaleString());
+    });
+    
+    AddAllItemsToTable7(cert,id,emp);
 
 });
-
 
 
 

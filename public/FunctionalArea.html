@@ -90,6 +90,9 @@
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
+              </li>
               
           </ul>
       </div>
@@ -112,7 +115,7 @@
           <!-- <th>CId</th> -->
           <th>SubCategory</th>
           <!-- <th>SId</th> -->
-          <th>Edit</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody id="tbody4" style="color: white;">
@@ -142,7 +145,7 @@ $( window ).on("load", function() {
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
   apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -160,13 +163,7 @@ $( window ).on("load", function() {
 
       
 
-      var today = new Date();
-  
-  var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-  
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  
-  var dateTime = date+' '+time;
+      var dateTime = new Date().toLocaleString().replace(',','');
  
  //FunctionalArea
  window.myFunctionFunctAre = async function() {
@@ -174,7 +171,20 @@ $( window ).on("load", function() {
     var table = document.getElementById("myTableFunc");
     var a=table.rows.length;
     var b=table.rows.length;
-    var ao = a.toString();
+    var ao;
+    var dbID;
+    var q1 =  query(collection(db, "JobConfig", "Master", "FunctionalArea"),orderBy("id", "desc"),limit(1));
+    var querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        dbID = doc.data().id + 1;
+    });
+    if(dbID == null){
+      ao = 1;
+    }
+    else{
+      ao = dbID;
+    }
     let text;
     let person = prompt("Please enter FunctionalArea Category:", "Enter...");
     if (person == null || person == "") {
@@ -187,11 +197,16 @@ $( window ).on("load", function() {
           console.log(person);
           console.log(person1);
         // alert(person);
-        await addDoc(collection(db, "JobConfig", "Master", "FunctionalArea"), {
+        await setDoc(doc(db, "JobConfig", "Master", "FunctionalArea",ao.toString()), {
                         CId: '1',
                         Category:person,
-                        SCId : ao,
-                        SubCategory: person1
+                        SCId : Number(ao),
+                        SubCategory: person1,
+                        CreatedAt :  dateTime.toString(),
+                        CreatedBy : "1",
+                        UpdatedAt :  dateTime.toString(),
+                        UpdatedBy : "1",
+                        id: Number(ao)
                     })
                     .then(()=> {  
                     setTimeout("location.reload(true);",120);
@@ -203,8 +218,10 @@ $( window ).on("load", function() {
     }
  }
   
-  window.Logoutfunc = function(){
+ window.Logoutfunc = function(){
+    alert("User has been Logged out successfully.");
     window.location.replace("index.html");
+
   }
                                                                
   </script>

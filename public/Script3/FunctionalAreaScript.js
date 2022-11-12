@@ -2,19 +2,13 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,updateDoc, orderBy, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 
-   var today = new Date();
-
-   var date = (today.getMonth()+1)  +'/'+today.getDate()+'/'+today.getFullYear() + ',';
-
-   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
-   var dateTime = date+' '+time;
+  var dateTime = new Date().toLocaleString().replace(',','');
 
    const firebaseConfig = {
     apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -111,7 +105,7 @@ var tbody= document.getElementById("tbody4");
       
 
         btnf.onclick = function () {
-          var result = confirm("Are you sure you want to Delete Functional Area with Id " + num);
+          var result = confirm("Are you sure you want to Delete Functional Area?");
           if (result) {
           deleteDoc(doc(db, "JobConfig", "Master","FunctionalArea",num))
           .then(()=> {  
@@ -132,11 +126,14 @@ var tbody= document.getElementById("tbody4");
               text = "User cancelled the prompt.";
             } else {
             // alert(person);
-            setDoc(doc(db, "JobConfig", "Master", "FunctionalArea", num), {
+            updateDoc(doc(db, "JobConfig", "Master", "FunctionalArea", num), {
                             CId: '1',
                             Category:person,
-                            SCId : num,
-                            SubCategory: person1
+                            UpdatedAt :  dateTime.toString(),
+                            UpdatedBy : "1",
+                            SCId : Number(iut),
+                            SubCategory: person1,
+                            id: Number(iut)
                           })   
                           .then(()=> {  
                             setTimeout("location.reload(true);",120);
@@ -173,25 +170,23 @@ var tbody= document.getElementById("tbody4");
         tbody.appendChild(trow);
     }
 
-    function AddAllItemsToTable3(qualification,id){
+    function AddAllItemsToTable3(qualification){
       tbody.innerHTML="";
 
         qualification.forEach((element,i) => {
-        AddItemToTable3(element.Category,element.CId,element.SubCategory,id[i]);    
+        AddItemToTable3(element.Category,element.CId,element.SubCategory,element.id);    
         });
     }
 
 var cert=[];
 var id=[];
-var q1 = query(collection(db, "JobConfig", "Master", "FunctionalArea"),where("CId", "==", "1"));
-var querySnapshot1 = await getDocs(q1);
+var q1 =  query(collection(db, "JobConfig", "Master", "FunctionalArea"),orderBy("UpdatedAt", "desc"));
+var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
-    cert.push(doc.data());
-    id.push(doc.id);
-    console.log(doc.data());
-  AddAllItemsToTable3(cert,id);
+  cert.push(doc.data());
+  AddAllItemsToTable3(cert);
   const source = doc.metadata.fromCache ? "local cache" : "server";
   // console.log("Data came from " + source);
 });
