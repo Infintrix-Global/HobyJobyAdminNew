@@ -91,7 +91,7 @@
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
               <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ChangePassword.html'" id="defaultOpen9">Change Password</button>
               </li>
               
           </ul>
@@ -105,6 +105,9 @@
     <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
     
     <div id="page-content-wrapper">
+      <div class="m-1">
+        <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="location.href ='BlogMaster.html'">Back to Blog Master</button>
+      </div>
       <div class="m-1">
             <!-- <button type="button" class="btn add-btn" onclick="myFunction()"><i class="fa fa-plus"></i> Add New</button> -->
           </div>
@@ -151,9 +154,13 @@ $( window ).on("load", function() {
   <script type="module">
 
 window.Logoutfunc = function(){
-    alert("User has been Logged out successfully.");
-    window.location.replace("index.html");
+    if (confirm("Are you sure you want to log out?") == true) {
+      window.location.replace("index.html");
 
+    } else {
+        window.location.reload();
+    }
+   
   }
                                                                
   </script>

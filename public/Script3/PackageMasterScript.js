@@ -147,7 +147,7 @@
                           featurescolumns:person1,
                           price:person3,
                           validity:person2,
-                          id : Number(cat),
+                          id : num,
                           UpdatedAt: dateTime.toString(),
                           UpdatedBy: "1"
                         })

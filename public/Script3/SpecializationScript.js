@@ -119,7 +119,7 @@ var tbody= document.getElementById("tbody7");
             text = "User cancelled the prompt.";
           } else {
             updateDoc(doc(db, "JobConfig", "Master", "Specialization", num), {
-                          id: cat,
+                          id: num,
                           Category:person,
                           SubCategory: person1
                           })

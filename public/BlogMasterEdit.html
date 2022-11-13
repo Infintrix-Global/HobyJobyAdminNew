@@ -92,7 +92,7 @@
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
               <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ForgotPassword.html'" id="defaultOpen8">Forgot Password</button>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ChangePassword.html'" id="defaultOpen9">Change Password</button>
               </li>
               
           </ul>
@@ -310,10 +310,14 @@
     
     });
     
-  window.Logoutfunc = function(){
-    alert("User has been Logged out successfully.");
-    window.location.replace("index.html");
+    window.Logoutfunc = function(){
+    if (confirm("Are you sure you want to log out?") == true) {
+      window.location.replace("index.html");
 
+    } else {
+        window.location.reload();
+    }
+   
   }
                                                                  
     </script>

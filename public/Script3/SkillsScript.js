@@ -137,7 +137,7 @@ var tbody= document.getElementById("tbody3");
                           name: person,
                           UpdatedAt :  dateTime.toString(),
                           UpdatedBy : "1",
-                          id : Number(id),
+                          id : num,
                         })
                         .then(()=> {  
                           setTimeout("location.reload(true);",120);

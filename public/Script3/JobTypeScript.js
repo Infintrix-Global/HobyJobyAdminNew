@@ -120,7 +120,7 @@ var tbody= document.getElementById("tbody6");
                             name: person,
                             UpdatedAt :  dateTime.toString(),
                             UpdatedBy : "1",
-                            id : Number(cat),
+                            id : num,
                           })
                           .then(()=> {  
                             setTimeout("location.reload(true);",120);

@@ -138,7 +138,7 @@ const db = getFirestore(app);
                       name: person,
                       UpdatedAt :  dateTime.toString(),
                       UpdatedBy : "1",
-                      id : Number(id),
+                      id : tio,
                     })
                     .then(()=> {  
                       setTimeout("location.reload(true);",120);
