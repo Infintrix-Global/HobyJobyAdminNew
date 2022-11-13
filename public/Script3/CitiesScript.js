@@ -113,10 +113,8 @@ if (person == null || person == "") {
   } else {
     updateDoc(doc(db, "JobConfig", "Master", "Cities", num), {
                 City: person,
-                UpdatedAt :  dateTime.toString(),
-                UpdatedBy : "1",
                 State:person1,
-                id : Number(cat),
+                id : num,
                 })
                 .then(()=> {  
                   setTimeout("location.reload(true);",120);
@@ -162,7 +160,7 @@ if (person == null || person == "") {
 
 var cert=[];
 var id=[];
-var q11 =  query(collection(db, "JobConfig", "Master", "Cities"),orderBy("UpdatedAt", "desc"));
+var q11 =  query(collection(db, "JobConfig", "Master", "Cities"),where("State", "==", "Maharashtra"));
 var querySnapshot11 = await getDocs(q11);
 querySnapshot11.forEach((doc) => {
 // doc.data() is never undefined for query doc snapshots

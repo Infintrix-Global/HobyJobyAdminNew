@@ -174,18 +174,16 @@ window.myFunctionSpecia = async function(){
     var a=table.rows.length;
     var b=table.rows.length;
     var ao;
-    var dbID;
-    var q1 =  query(collection(db, "JobConfig", "Master", "Specialization"),orderBy("id", "desc"),limit(1));
-    var querySnapshot1 = await getDocs(q1);
-    querySnapshot1.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        dbID = doc.data().id + 1;
-    });
-    if(dbID == null){
-      ao = 1;
+    const snapshot =  await getDocs(collection(db, "JobConfig", "Master", "Specialization"));
+    if(!snapshot.empty)
+    {
+      const ids = snapshot.docs.map(doc => (!isNaN(parseInt((doc.id) ? doc.id : '0'))) ? parseInt((doc.id) ? doc.id : '0') : 0)
+      const max = Math.max(...ids);
+      ao = parseInt(max) + 1;
     }
-    else{
-      ao = dbID;
+    if(ao == null)
+    {
+      ao =1;
     }
     let text;
     let person = prompt("Please enter Specialization Category:", "Enter...");
@@ -197,11 +195,7 @@ window.myFunctionSpecia = async function(){
     await setDoc(doc(db, "JobConfig", "Master", "Specialization",ao.toString()), {
                     Category:person,
                     SubCategory: person1,
-                    CreatedAt :  dateTime.toString(),
-                    CreatedBy : "1",
-                    UpdatedAt :  dateTime.toString(),
-                    UpdatedBy : "1",
-                    id : Number(ao)
+                    id : ao.toString()
                     })
                     .then(()=> {  
                         setTimeout("location.reload(true);",120);

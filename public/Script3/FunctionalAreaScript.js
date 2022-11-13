@@ -59,7 +59,6 @@ var tbody= document.getElementById("tbody4");
         // td5.appendChild(btn3f);
 
 
-
         td1.innerHTML= cat;
         // td2.innerHTML=cby;
         td3.innerHTML=uat;
@@ -129,11 +128,8 @@ var tbody= document.getElementById("tbody4");
             updateDoc(doc(db, "JobConfig", "Master", "FunctionalArea", num), {
                             CId: '1',
                             Category:person,
-                            UpdatedAt :  dateTime.toString(),
-                            UpdatedBy : "1",
-                            SCId : Number(iut),
-                            SubCategory: person1,
-                            id: Number(iut)
+                            SCId : num,
+                            SubCategory: person1
                           })   
                           .then(()=> {  
                             setTimeout("location.reload(true);",120);
@@ -170,23 +166,24 @@ var tbody= document.getElementById("tbody4");
         tbody.appendChild(trow);
     }
 
-    function AddAllItemsToTable3(qualification){
+    function AddAllItemsToTable3(qualification,id){
       tbody.innerHTML="";
-
+        
         qualification.forEach((element,i) => {
-        AddItemToTable3(element.Category,element.CId,element.SubCategory,element.id);    
+        AddItemToTable3(element.Category,element.CId,element.SubCategory,id[i]);    
         });
     }
 
 var cert=[];
 var id=[];
-var q1 =  query(collection(db, "JobConfig", "Master", "FunctionalArea"),orderBy("UpdatedAt", "desc"));
+var q1 =  query(collection(db, "JobConfig", "Master", "FunctionalArea"),where("CId", "==", "1"),orderBy("Category"),orderBy("SubCategory"));
 var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
   cert.push(doc.data());
-  AddAllItemsToTable3(cert);
+  id.push(doc.id);
+  AddAllItemsToTable3(cert,id);
   const source = doc.metadata.fromCache ? "local cache" : "server";
   // console.log("Data came from " + source);
 });

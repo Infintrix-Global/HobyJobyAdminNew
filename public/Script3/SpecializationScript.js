@@ -119,10 +119,8 @@ var tbody= document.getElementById("tbody7");
             text = "User cancelled the prompt.";
           } else {
             updateDoc(doc(db, "JobConfig", "Master", "Specialization", num), {
-                          id: Number(cat),
+                          id: cat,
                           Category:person,
-                          UpdatedAt :  dateTime.toString(),
-                          UpdatedBy : "1",
                           SubCategory: person1
                           })
                           .then(()=> {  
@@ -168,7 +166,7 @@ var tbody= document.getElementById("tbody7");
 
 var cert=[];
 var id=[];
-var q1 =  query(collection(db, "JobConfig", "Master", "Specialization"),orderBy("UpdatedAt", "desc"));
+var q1 =  query(collection(db, "JobConfig", "Master", "Specialization"),orderBy("Category"),orderBy("SubCategory"));
 var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
