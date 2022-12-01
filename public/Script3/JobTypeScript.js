@@ -139,7 +139,7 @@ var tbody= document.getElementById("tbody6");
 // {
   var cert=[];
   var id=[];
-  var q1 =  query(collection(db, "JobConfig", "Master", "JobTypes"),orderBy("UpdatedAt", "desc"));
+  var q1 =  query(collection(db, "JobConfig", "Master", "JobTypes"),orderBy("name", "asc"));
 var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots

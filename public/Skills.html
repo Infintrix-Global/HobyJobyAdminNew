@@ -171,7 +171,7 @@ document.querySelector("#favDialog").addEventListener('cancel', function(e) {
   // import EditorJS from '@editorjs/editorjs';
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getFirestore, Timestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
     import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
