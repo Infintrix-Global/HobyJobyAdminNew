@@ -129,43 +129,12 @@
       };
 
       btn2pa.onclick = function () {
-        let text;
-        let person = prompt("Please enter Package Name:", cby);
-        if (person == null || person == "") {
-          text = "User cancelled the prompt.";
-        } else {
-          let person1 = prompt("Please enter Package Features:", uat);
-          let person2 = prompt("Please enter Package Validity:", ugz);
-          let person3 = prompt("Please enter Package Price:",uby);
-      
-      
-          if (person == null || person == "") {
-          text = "User cancelled the prompt.";
-        } else {
-          updateDoc(doc(db, "JobConfig", "Master", "PackageMaster", num), {
-                          PackageName: person,
-                          featurescolumns:person1,
-                          price:person3,
-                          validity:person2,
-                          id : num,
-                          UpdatedAt: dateTime.toString(),
-                          UpdatedBy: "1"
-                        })
-                        .then(()=> {  
-                            setTimeout("location.reload(true);",120);
-                          })     
-                          .catch((error)=>{
-                              console.log(error);
-                          }); 
-        }
-      
-        }
-
-
-
-
-        // td5.contentEditable = true;
-        // td5.style.backgroundColor = "#BBC4CE";
+        document.getElementById("id").value = num;
+        document.getElementById("packageName").value = cby;
+        document.getElementById("packageFeature").value = uat;
+        document.getElementById("packageValidity").value = ugz;
+        document.getElementById("packagePrice").value = b;
+        document.querySelector("#favDialog").showModal();
       }; 
       
       

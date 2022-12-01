@@ -102,7 +102,7 @@
     <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
     <div id="page-content-wrapper">
       <div class="m-1">
-        <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="myFunctionQual()"><i class="fa fa-plus"></i> Add New</button>
+        <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="openForm()"><i class="fa fa-plus"></i> Add New</button>
       </div>
       <div class="container-fluid">
         <h1 style="color: white;">Qualification</h1>
@@ -123,10 +123,22 @@
       </table>
           
       </div>
+      <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
+      <form method="dialog">
+        <div>
+          <label>Enter Qualification Name:</label>
+          <input class="input-box-330" type="text" name="qualificationName" id="qualificationName" required>
+        </div>
+          <input type="hidden" id="id" name="id"> 
+        <div style="align-items: right;">
+          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionQual()" >Submit</button>
+          <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
+        </div>
+      </form>    
+      </dialog>
     </div>
   </div>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>  -->
-<script src="src/fancyTable.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script> 
 <script>
 $( window ).on("load", function() {
     setTimeout(async function(){ 
@@ -134,11 +146,25 @@ $( window ).on("load", function() {
     globalSearch: true,
     sortable: true,
     pagination: true, 			
-    perPage:10, 	
+    perPage:5, 	
     sortColumn: 2,		
   });
 }, 1000);
 });
+
+function openForm() {
+  document.querySelector("#favDialog").showModal();
+}
+
+function closeForm() {
+  document.querySelector("#favDialog").close();
+  location.reload(true);
+}
+
+document.querySelector("#favDialog").addEventListener('cancel', function(e) {
+	e.preventDefault();
+});
+
 </script>
 
 
@@ -147,8 +173,8 @@ $( window ).on("load", function() {
     
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getFirestore, Timestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
   apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -171,6 +197,9 @@ $( window ).on("load", function() {
 
 window.myFunctionQual = async function () {
     var table = document.getElementById("myTableQual");
+    var qualificationName = document.getElementById("qualificationName").value;
+    var dbID = document.getElementById("id").value;
+  
     var a=table.rows.length;
     var b=table.rows.length;
     var ao;
@@ -187,17 +216,20 @@ window.myFunctionQual = async function () {
       ao =1;
     }
     let text;
-    let person = prompt("Please enter Qualifiactions name:", "Enter...");
-    if (person == null || person == "") {
-      text = "User cancelled the prompt.";
+    if (qualificationName == null || qualificationName == "") {
+      text = "Please Enter the required value.";
     } else {
-   const docRef = await setDoc(doc(db, "JobConfig", "Master", "Qualifiactions",ao.toString()), {
-                          name: person,
-                          CreatedAt :  dateTime.toString(),
-                          CreatedBy : "1",
-                          UpdatedAt :  dateTime.toString(),
-                          UpdatedBy : "1",
-                          id: ao.toString()
+      if(dbID == null || dbID == ""){
+       
+          await setDoc(doc(db, "JobConfig", "Master", "Qualifiactions",ao.toString()), {
+                         CreatedAt :  dateTime.toString(),
+                         CreatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         CreatedBy : "1",
+                         UpdatedAt :  dateTime.toString(),
+                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         UpdatedBy : "1",
+                         id: ao.toString(),
+                         name: qualificationName.toString()
                         })
                          .then(()=> {  
                           setTimeout("location.reload(true);",120);
@@ -205,6 +237,24 @@ window.myFunctionQual = async function () {
                         .catch((error)=>{
                             console.log(error);
                         }); 
+      }
+      else{
+        
+           updateDoc(doc(db, "JobConfig", "Master", "Qualifiactions", dbID.toString()), {
+                         UpdatedAt :  dateTime.toString(),
+                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         UpdatedBy : "1",
+                         id: dbID.toString(),
+                         name: qualificationName.toString()
+                        })
+                        .then(()=> {  
+                          setTimeout("location.reload(true);",120);
+                        })     
+                        .catch((error)=>{
+                            console.log(error);
+                        }); 
+      }
+
     }
 }
   

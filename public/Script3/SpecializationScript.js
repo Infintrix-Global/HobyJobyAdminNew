@@ -108,33 +108,10 @@ var tbody= document.getElementById("tbody7");
         };
   
         btn2sp.onclick = function () {
-
-          let text;
-          let person = prompt("Please enter Specialization Category:", cby);
-          if (person == null || person == "") {
-            text = "User cancelled the prompt.";
-          } else {
-            let person1 = prompt("Please enter Specialization SubCategory:", rui);
-            if (person1 == null || person1 == "") {
-            text = "User cancelled the prompt.";
-          } else {
-            updateDoc(doc(db, "JobConfig", "Master", "Specialization", num), {
-                          id: num,
-                          Category:person,
-                          SubCategory: person1
-                          })
-                          .then(()=> {  
-                            setTimeout("location.reload(true);",120);
-                          })     
-                          .catch((error)=>{
-                              console.log(error);
-                          }); 
-          }
-        
-          }
-
-
-
+          document.getElementById("id").value = num;
+          document.getElementById("categoryName").value = cby;
+          document.getElementById("subCategoryName").value = rui;
+          document.querySelector("#favDialog").showModal();
 
           // td3.contentEditable = true;
           // td3.style.backgroundColor = "#BBC4CE";

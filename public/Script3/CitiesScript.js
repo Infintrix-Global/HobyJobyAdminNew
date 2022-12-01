@@ -101,29 +101,10 @@
       };
 
       btn2c.onclick = function () {
-        let text;
-let person = prompt("Please enter Cities name:", cby);
-if (person == null || person == "") {
-  text = "User cancelled the prompt.";
-} else {
-  let person1 = prompt("Please enter State name:", uat);
-  // alert(person);
-  if (person1 == null || person1 == "") {
-    text = "User cancelled the prompt.";
-  } else {
-    updateDoc(doc(db, "JobConfig", "Master", "Cities", num), {
-                City: person,
-                State:person1,
-                id : num,
-                })
-                .then(()=> {  
-                  setTimeout("location.reload(true);",120);
-                })     
-                .catch((error)=>{
-                    console.log(error);
-                }); 
-    }
-}
+      document.getElementById("id").value = num;
+      document.getElementById("cityName").value = cby;
+      document.getElementById("stateName").value = uat;
+      document.querySelector("#favDialog").showModal();
 
 
 
@@ -134,20 +115,7 @@ if (person == null || person == "") {
         // td2.style.backgroundColor = "#BBC4CE";
       }; 
       
-      // btn3c.onclick = function () {
-      //   td3.contentEditable = false;
-      //   td2.contentEditable = false;
-      //   var tio = String(cat);
-      //   setDoc(doc(db, "JobConfig", "Master", "Cities", tio), {
-      //     City: td2.innerHTML,
-      //     State:td3.innerHTML,
-      //     id : String(cat),
-      //   });
-      //   setTimeout("location.reload(true);",3000);
-      // }; 
-      tbody.appendChild(trow);
-      // getMarkers();
-      // timeFunction1();
+
   }
 
   function AddAllItemsToTable4(qualification){

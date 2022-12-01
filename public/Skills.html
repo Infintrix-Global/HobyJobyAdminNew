@@ -104,7 +104,7 @@
           
     <div id="page-content-wrapper">
         <div class="m-0">
-            <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn " onclick="myFunctionSkil()"><i class="fa fa-plus"></i> Add New</button>
+            <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn " onclick="openForm()"><i class="fa fa-plus"></i> Add New</button>
         </div>
         <h1 style="color: white;">Skills</h1>
         <table id="myTableSkill" class="table myTableSkill" style="column-width: 1px;">
@@ -123,9 +123,22 @@
             </tbody>
          </table>
      </div>
+     <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
+      <form method="dialog">
+        <div>
+          <label>Enter Skill Name:</label>
+          <input class="input-box-330" type="text" name="skillName" id="skillName" required>
+        </div> 
+        <input type="hidden" id="id" name="id"> 
+        <div style="align-items: right;">
+          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionSkil()" >Submit</button>
+          <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
+        </div>
+      </form>    
+      </dialog>
     </div>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>  -->
-<script src="src/fancyTable.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script> 
 <script>
 $( window ).on("load", function() {
     setTimeout(async function(){ 
@@ -137,6 +150,19 @@ $( window ).on("load", function() {
   });
 }, 1000);
 });
+function openForm() {
+  document.querySelector("#favDialog").showModal();
+}
+
+
+function closeForm() {
+  document.querySelector("#favDialog").close();
+  location.reload(true);
+}
+
+document.querySelector("#favDialog").addEventListener('cancel', function(e) {
+	e.preventDefault();
+});
 </script>
 
 
@@ -146,7 +172,7 @@ $( window ).on("load", function() {
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, query, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
   apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
@@ -170,6 +196,8 @@ $( window ).on("load", function() {
   window.myFunctionSkil = async function () {
 
         var table = document.getElementById("myTableSkill");
+        var skillName = document.getElementById("skillName").value;
+        var dbID = document.getElementById("id").value;
         var a=table.rows.length;
         var b=table.rows.length;
         var ao;
@@ -185,25 +213,44 @@ $( window ).on("load", function() {
           ao =1;
         }
         let text;
-        let person = prompt("Please enter Skills name:", "Enter...");
-        if (person == null || person == "") {
+        if (skillName == null || skillName == "") {
         text = "User cancelled the prompt.";
         } else {
-        // alert(person);
-        setDoc(doc(db, "JobConfig", "Master", "Skills", ao.toString()), {
-                        name: person,
-                        CreatedAt :  dateTime.toString(),
-                        CreatedBy : "1",
-                        UpdatedAt :  dateTime.toString(),
-                        UpdatedBy : "1",
-                        id : ao.toString(),
-                    })
-                    .then(()=> {  
-                      setTimeout("location.reload(true);",120);
-                    })     
-                    .catch((error)=>{
-                        console.log(error);
-                    }); 
+          if(dbID == null || dbID == ""){
+          
+          setDoc(doc(db, "JobConfig", "Master", "Skills", ao.toString()), {
+                         CreatedAt :  dateTime.toString(),
+                         CreatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         CreatedBy : "1",
+                         UpdatedAt :  dateTime.toString(),
+                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         UpdatedBy : "1",
+                         id: ao.toString(),
+                         name: skillName.toString()
+                      })
+                      .then(()=> {  
+                        setTimeout("location.reload(true);",120);
+                      })     
+                      .catch((error)=>{
+                          console.log(error);
+                      }); 
+          }
+          else{
+           
+            updateDoc(doc(db, "JobConfig", "Master", "Skills", dbID.toString()), {
+                         UpdatedAt :  dateTime.toString(),
+                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
+                         UpdatedBy : "1",
+                         id: dbID.toString(),
+                         name: skillName.toString()
+                        })
+                        .then(()=> {  
+                          setTimeout("location.reload(true);",120);
+                        })     
+                        .catch((error)=>{
+                            console.log(error);
+                        }); 
+          }
                     
         }
   }

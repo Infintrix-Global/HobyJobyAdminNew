@@ -262,9 +262,9 @@
                                 // alert($(this).val());
                                 var stringmas = String($(this).val());
                                 updateDoc(doc(db, "BlogMaster", param.toString()), {
-                                    Description: content,
-                                    Title: head,
+                                    Description: content.toString(),
                                     EmployerId: stringmas,
+                                    Title: head.toString(),
                                     UpdatedAt: dateTime.toString(),
                                     UpdatedBy: "1",
                                     id: param.toString(),

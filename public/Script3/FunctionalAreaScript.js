@@ -114,41 +114,11 @@ var tbody= document.getElementById("tbody4");
         };
   
         btn2f.onclick = function () {
-          let text;
-          let person = prompt("Please enter FunctionalArea Category:", cat);
-          if (person == null || person == "") {
-            text = "User cancelled the prompt.";
-          } else {
+          document.getElementById("id").value = num;
+          document.getElementById("categoryName").value = cat;
+          document.getElementById("subCategoryName").value = uat;
+          document.querySelector("#favDialog").showModal();
 
-            let person1 = prompt("Please enter FunctionalArea SubCategory:",uat);
-            if (person1 == null || person1 == "") {
-              text = "User cancelled the prompt.";
-            } else {
-            // alert(person);
-            updateDoc(doc(db, "JobConfig", "Master", "FunctionalArea", num), {
-                            CId: '1',
-                            Category:person,
-                            SCId : num,
-                            SubCategory: person1
-                          })   
-                          .then(()=> {  
-                            setTimeout("location.reload(true);",120);
-                          })     
-                          .catch((error)=>{
-                              console.log(error);
-                          }); 
-          }
-        }
-
-
-
-
-
-
-          // td1.contentEditable = true;
-          // td3.contentEditable = true;
-          // td1.style.backgroundColor = "#BBC4CE";
-          // td3.style.backgroundColor = "#BBC4CE";
         }; 
         
         // btn3f.onclick = function () {

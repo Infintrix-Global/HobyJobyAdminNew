@@ -106,32 +106,10 @@ var tbody= document.getElementById("tbody6");
           }
         };
   
-        btn2j.onclick = function () {
-          // td2.contentEditable = true;
-          // td2.style.backgroundColor = "#BBC4CE";
-
-          let text;
-          let person = prompt("Please enter JobTypes name:", cby);
-          if (person == null || person == "") {
-            text = "User cancelled the prompt.";
-          } else {
-            // alert(person);
-            updateDoc(doc(db, "JobConfig", "Master", "JobTypes", num), {
-                            name: person,
-                            UpdatedAt :  dateTime.toString(),
-                            UpdatedBy : "1",
-                            id : num,
-                          })
-                          .then(()=> {  
-                            setTimeout("location.reload(true);",120);
-                          })     
-                          .catch((error)=>{
-                              console.log(error);
-                          }); 
-          }
-
-
-
+        btn2j.onclick = function () { 
+          document.getElementById("id").value = num;
+          document.getElementById("jobTypeName").value = cby;
+          document.querySelector("#favDialog").showModal();
         }; 
         
         // btn3j.onclick = function () {

@@ -129,25 +129,9 @@ var tbody= document.getElementById("tbody2");
 
 
       btn2q.onclick = function () {
-        let text;
-        let person = prompt("Please enter Qualifiactions name:", name);
-        if (person == null || person == "") {
-          text = "User cancelled the prompt.";
-        } else {
-          // alert(person);
-          updateDoc(doc(db, "JobConfig", "Master", "Qualifiactions", num), {
-                          name: person,
-                          UpdatedAt :  dateTime.toString(),
-                          UpdatedBy : "1",
-                          id : num,
-                        })
-                        .then(()=> {  
-                          setTimeout("location.reload(true);",120);
-                        })     
-                        .catch((error)=>{
-                            console.log(error);
-                        }); 
-        }
+        document.getElementById("id").value = num;
+        document.getElementById("qualificationName").value = name;
+        document.querySelector("#favDialog").showModal();
       }; 
     
     }

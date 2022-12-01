@@ -123,33 +123,9 @@ const db = getFirestore(app);
 
     btn2.onclick = function () {
       // td6.contentEditable = true;
-      var table = document.getElementById("myCertiTable");
-      var a=table.rows.length;
-      var b=table.rows.length;
-      var ao = a.toString();
-      var tio = String(id);
-    let text;
-    let person = prompt("Please enter Certification name:", name);
-    if (person == null || person == "") {
-      text = "User cancelled the prompt.";
-    } else {
-      // alert(person);
-      updateDoc(doc(db, "JobConfig", "Master", "Certifications", tio), {
-                      name: person,
-                      UpdatedAt :  dateTime.toString(),
-                      UpdatedBy : "1",
-                      id : tio,
-                    })
-                    .then(()=> {  
-                      setTimeout("location.reload(true);",120);
-                    })     
-                    .catch((error)=>{
-                        console.log(error);
-                    }); 
-                    // window.onload = function(){
-                      // document.getElementById("defaultOpen1").click();
-                    // }
-    }
+      document.getElementById("id").value = num;
+      document.getElementById("certificationName").value = name;
+      document.querySelector("#favDialog").showModal();
   }
   
   
