@@ -129,12 +129,8 @@
       };
 
       btn2pa.onclick = function () {
-        document.getElementById("id").value = num;
-        document.getElementById("packageName").value = cby;
-        document.getElementById("packageFeature").value = uat;
-        document.getElementById("packageValidity").value = ugz;
-        document.getElementById("packagePrice").value = b;
-        document.querySelector("#favDialog").showModal();
+        location.href = 'PackageMasterEdit.html?id=' + num;
+
       }; 
       
       
