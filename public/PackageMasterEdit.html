@@ -112,9 +112,14 @@
                 <div style="margin-top:20px;">
                     <label>Enter Name:</label>
                     <input class="input-box-330" type="text" name="packageName" id="packageName" required>
-                    <label>Enter Validity:</label>
-                    <input class="input-box-330" type="text" name="packageValidity" id="packageValidity" required>
-                    <label>Enter Price:</label>
+                    <label style="margin-left:10px;">Enter Validity:</label>
+                    <select name="validityType" id="validityType" onchange="yesnoCheck(this);" style="width:190px; height: 30px;" required>
+                      <option value="0">Select from below:</option>
+                      <option value="1" selected>Days</option>
+                      <option value="2">Months</option>
+                    </select>
+                    <input style="margin-left:10px;"  class="input-box-330" type="number" name="packageValidity" id="packageValidity" value="Enter Value pleases" required>
+                    <label style="margin-left:10px;">Enter Price:</label>
                     <input class="input-box-330" type="text" name="packagePrice" id="packagePrice" required>
                   </div> 
             </div>
@@ -145,6 +150,15 @@
       </div>
     
     </div>
+    <script>
+      function yesnoCheck(that) {
+      if (that.value == 1 || that.value == 2) {
+        $('#packageValidity').show();
+      } else {
+        $('#packageValidity').hide();
+      }
+  }
+      </script>
 <script type="module">
     
     // import EditorJS from '@editorjs/editorjs';
@@ -188,7 +202,12 @@
         window.myFunction1 =  async function (){
   
             var packageName = document.getElementById("packageName").value;
-            var packageValidity = document.getElementById("packageValidity").value;
+            if(document.getElementById("validityType").value == 1){
+              var packageValidity = document.getElementById("packageValidity").value;
+            }
+            else{
+              var packageValidity = document.getElementById("packageValidity").value * 30;
+            }
             var packagePrice = document.getElementById("packagePrice").value;
             var type =  CKEDITOR.instances.editor.getData();
             var content = removeTags(type);
@@ -199,7 +218,7 @@
                           PackageName: packageName.toString(),
                           featurescolumns:content.toString(),
                           price:packagePrice.toString(),
-                          validity:packageValidity.toString(),
+                          validity:packageValidity,
                           id : param.toString(),
                           UpdatedAt: dateTime.toString(),
                           UpdatedBy: "1"
