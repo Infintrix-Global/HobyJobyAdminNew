@@ -141,9 +141,9 @@ var tbody= document.getElementById("tbody2");
       var num = String(id);
 
       btnq.onclick = function () {
-        var result = confirm("Are you sure you want to Delete Coupans Details?");
+        var result = confirm("Are you sure you want to Delete Coupons Details?");
         if (result) {
-        deleteDoc(doc(db, "JobConfig", "Master","Coupans",num))
+        deleteDoc(doc(db, "JobConfig", "Master","Coupons",num))
         .then(()=> {  
           setTimeout("location.reload(true);",120);
         })     
@@ -153,28 +153,28 @@ var tbody= document.getElementById("tbody2");
 
       btn2q.onclick = function () {
         document.getElementById("id").value = num;
-        document.getElementById("coupanCode").value = code;
-        document.getElementById("coupanDescription").value = description;
-        document.getElementById("coupanType").value = discountType;
-        document.getElementById("coupanValue").value = discountValue;
-        document.getElementById("coupanMaximumUses").value = maximumNOfUses;
-        document.getElementById("coupanExpiryDate").value = expiryDate;
+        document.getElementById("couponCode").value = code;
+        document.getElementById("couponDescription").value = description;
+        document.getElementById("couponType").value = discountType;
+        document.getElementById("couponValue").value = discountValue;
+        document.getElementById("couponMaximumUses").value = maximumNOfUses;
+        document.getElementById("couponExpiryDate").value = expiryDate;
         document.querySelector("#favDialog").showModal();
-        $('#coupanValueDiv').show();
+        $('#couponValueDiv').show();
       }; 
     
     }
 
-    function AddAllItemsToTable1(coupans){
+    function AddAllItemsToTable1(coupons){
         tbody.innerHTML="";
-        coupans.forEach((element) => {
+        coupons.forEach((element) => {
         AddItemToTable1(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id,element.Code,element.Description, element.DiscountType, element.DiscountValue, element.MaximumNOfUses, element.NumberOfTimesUsed, element.ExpiryDate);    
       });
     }
 
 var coup=[];
 var id=[];
-var q1 =  query(collection(db, "JobConfig", "Master", "Coupans"),orderBy("UpdatedAt", "desc"));
+var q1 =  query(collection(db, "JobConfig", "Master", "Coupons"),orderBy("UpdatedAt", "desc"));
 var querySnapshot1 =  await getDocs(q1);
 querySnapshot1.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots

@@ -36,26 +36,35 @@
                                                                                                                                                                   
 
 
-var cert=[];
+var cert= new Array();
 const postListRef = await ref(db, "LoginPage");
 onValue(postListRef, (snapshot) => {
   const data = snapshot.val();
-  cert.push(data["Name"]);
-  cert.push(data["Password"]);
+  console.log(data.length);
+   for(var i =0 ; i <  data.length ; i++){
+        cert.push(data[i]);
+   }
   // alert(data["Name"])
 });
 
 document.getElementById("submit1").addEventListener("click", function() {
-        var  email = document.getElementById("validationCustom01").value;
-        var  pass = document.getElementById("validationCustom02").value;
-        console.log(String(cert[0]));
-        if(email == String(cert[0]) && pass == String(cert[1])){
-          sessionStorage.setItem("Name", String(cert[0]));
-          sessionStorage.setItem("Password", String(cert[1]));
-            window.location.replace("Certification.html");
-        }else{
-          alert("The Password or the email entered is incorrect");
-        }
+    var  email = document.getElementById("validationCustom01").value;
+    var  pass = document.getElementById("validationCustom02").value;
+    var a = false;
+    for(var i =0 ; i <  cert.length ; i++){
+      if(email == String(cert[i].Name) && pass == String(cert[i].Password)){
+          sessionStorage.setItem("Name", String(cert[i].Name));
+          sessionStorage.setItem("Password", String(cert[i].Password));
+          sessionStorage.setItem("Type", String(cert[i].Type));
+          sessionStorage.setItem("Index", i);
+          a = true;
+          window.location.replace("Certification.html");
+      } 
+    }
+    if(a == false){
+        alert("The Password or the email entered is incorrect");
+      }
+       
         // window.location.replace("/public/loginpage.html");
 });
 

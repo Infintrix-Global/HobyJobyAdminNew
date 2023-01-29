@@ -13,7 +13,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="CssPage1.css">
-    <script type="module" src="Script3/PackageMasterScript.js"></script>
+    <script type="module" src="Script3/CandidatesScript.js"></script>
     <script type = "text/javascript" src="jQuery.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -102,128 +102,56 @@
               <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ChangePassword.html'" id="defaultOpen9">Change Password</button>
               </li>
-              
           </ul>
       </div>
- 
-  <div id="packagemaster" class="tabcontent">
-    <a href="#menu-toggle9" style="background-color: #454d55;" class="tgl-btn" id="menu-toggle9"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
+
+  <!-- jobtypes-->
+  <div id="Candidates" class="tabcontent">
+    <a href="#menu-toggle1" style="background-color: #454d55;"  class="tgl-btn" id="menu-toggle1"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
     <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
-      
     <div id="page-content-wrapper">
-        <div class="m-1">
-          <button style="float: right;margin-top: 60px; color: white;" type="button" class="btn add-btn" onclick="location.href='PackageMasterAdd.html'"><i class="fa fa-plus"></i> Add New</button>
-        </div>
-        <h1>Package Master</h1>
-      <table id="myTablepackagemas" class="table myTablepackagemas" style="column-width: 1px; color: white;">
-      <thead>
-        <tr>
-          <!-- <th>Id</th> -->
-          <th>Package name</th>
-          <th>Price</th>
-          <th>Validity</th>
-          <!-- <th>Created At</th>
-          <th>Created By</th>
-          <th>Updated At</th>
-          <th>Updated By</th> -->
-          <th>Features</th>
-          <th style="width: 10%;">Action</th>
-        </tr>
-      </thead>
-      <tbody id="tbodypackmas">
-      </tbody>
-    </table>
+      <div class="container-fluid">
+        <h1 style="color: white;">Candidates</h1>
+        <table id="myTableCandi" class="table myTableCandi" style="column-width: 1px;">
+          <thead>
+              <tr style="color: white;">
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>User Type</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody id="tbody2" style="color: white;">
+          </tbody>
+      </table>
+          
+      </div>
     </div>
-    <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
-      <form method="dialog">
-        <div>
-          <label>Enter Package Name:</label>
-          <input class="input-box-330" type="text" name="packageName" id="packageName" required>
-        </div> 
-        <div>
-          <label>Enter Package Feature:</label>
-          <input class="input-box-330" type="text" name="packageFeature" id="packageFeature" required>
-        </div> 
-        <div>
-          <label>Enter Package Validity:</label>
-          <input class="input-box-330" type="text" name="packageValidity" id="packageValidity" required>
-        </div> 
-        <div>
-          <label>Enter Package Price:</label>
-          <input class="input-box-330" type="text" name="packagePrice" id="packagePrice" required>
-        </div> 
-        <input type="hidden" id="id" name="id"> 
-        <div style="align-items: right;">
-          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionpackagmas()" >Submit</button>
-          <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
-        </div>
-      </form>    
-      </dialog>
-  </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script> 
 <script>
 $( window ).on("load", function() {
     setTimeout(async function(){ 
-  $(".myTablepackagemas").fancyTable({ 	
+  $(".myTableCandi").fancyTable({ 	
     globalSearch: true,
     sortable: true,
     pagination: true, 			
-    perPage:5, 				
+    perPage:5, 	
+    sortColumn: 2,		
   });
 }, 1000);
 });
-function openForm() {
-  document.querySelector("#favDialog").showModal();
-}
 
-function closeForm() {
-  document.querySelector("#favDialog").close();
-  location.reload(true);
-}
 
-document.querySelector("#favDialog").addEventListener('cancel', function(e) {
-	e.preventDefault();
-});
+
 </script>
 
 
   
   <script type="module">
-  // import EditorJS from '@editorjs/editorjs';
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, limit, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-  apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
-  authDomain: "hobyjoby-8b9ca.firebaseapp.com",
-  projectId: "hobyjoby-8b9ca",
-  storageBucket: "hobyjoby-8b9ca.appspot.com",
-  messagingSenderId: "755782612092",
-  appId: "1:755782612092:web:98ed2fb25735eb435985f9",
-  measurementId: "G-L23JY97GH8"
-};
-    
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const db = getFirestore(app);
-
-      
-
-      var dateTime = new Date().toLocaleString().replace(',','');
- 
- 
-window.myFunctionpackagmas = async function() {
-    
-    var dbID = document.getElementById("id").value;
-    location.href = 'PackageMasterEdit.html?id=' + dbID;
-
-    
- }
   
- window.Logoutfunc = function(){
+window.Logoutfunc = function(){
     if (confirm("Are you sure you want to log out?") == true) {
       window.location.replace("index.html");
 
@@ -232,8 +160,19 @@ window.myFunctionpackagmas = async function() {
     }
    
   }
-                                                               
+  
+  
+// window.texteditor = function(){
+//   var holder = document.getElementById("example2");  
+//     const editor = new EditorJS({
+//     /**
+//      * Id of Element that should contain Editor instance
+//      */
+//     holder: 'editorjs'
+//   });
+// }                                                               
   </script>
+
 
   </body>
 </html>

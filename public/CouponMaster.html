@@ -13,7 +13,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="CssPage1.css">
-    <script type="module" src="Script3/CoupansScript.js"></script>
+    <script type="module" src="Script3/CouponsScript.js"></script>
     <script type = "text/javascript" src="jQuery.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -91,13 +91,22 @@
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
               </li>
               <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'CouponMaster.html'" id="defaultOpen8">Coupon Master</button>
+              </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'EmployerMaster.html'" id="defaultOpen8">Employer Master</button>
+              </li>
+              <li>
+                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'CandidateMaster.html'" id="defaultOpen8">Candidate Master</button>
+              </li>
+              <li>
                 <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ChangePassword.html'" id="defaultOpen9">Change Password</button>
               </li>
           </ul>
       </div>
 
   <!-- jobtypes-->
-  <div id="coupans" class="tabcontent">
+  <div id="coupons" class="tabcontent">
     <a href="#menu-toggle1" style="background-color: #454d55;"  class="tgl-btn" id="menu-toggle1"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
     <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
     <div id="page-content-wrapper">
@@ -105,8 +114,8 @@
         <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="openForm()"><i class="fa fa-plus"></i> Add New</button>
       </div>
       <div class="container-fluid">
-        <h1 style="color: white;">Coupans</h1>
-        <table id="myTableCoupan" class="table myTableCoupan" style="column-width: 1px;">
+        <h1 style="color: white;">Coupons</h1>
+        <table id="myTableCoupon" class="table myTableCoupon" style="column-width: 1px;">
           <thead>
               <tr style="color: white;">
                   <th>Code</th>
@@ -127,36 +136,37 @@
       <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
       <form method="dialog">
         <div>
-          <label>Enter Coupan Code:</label>
-          <input class="input-box-330" type="text" name="coupanCode" id="coupanCode" required>
+          <label>Enter Coupon Code:</label>
+          <input class="input-box-330" type="text" name="couponCode" id="couponCode" required>
         </div>
         <div>
             <label>Enter Description:</label>
-            <input class="input-box-330" type="text" name="coupanDescription" id="coupanDescription" required>
+            <input class="input-box-330" type="text" name="couponDescription" id="couponDescription" required>
         </div>
         <div>
             <label>Enter Discount Type:</label>
-            <select name="coupanType" id="coupanType" onchange="yesnoCheck(this);" style="width:190px; height: 30px;" required>
+            <select name="couponType" id="couponType" onchange="yesnoCheck(this);" style="width:190px; height: 30px;" required>
                 <option value="0">Select from below:</option>
                 <option value="1">Percentage</option>
                 <option value="2">Fixed Amount</option>
             </select>
         </div>
-        <div id="coupanValueDiv" style="display: none;">
-            <label>Enter Discount Value:</label>
-            <input class="input-box-330"   type="number" name="coupanValue" id="coupanValue" required>
+        <div id="couponValueDiv" style="display: none;">
+            <label id="disAmount" style="display: none;">Enter Discount Value:</label>
+            <label id="disPercentage" style="display: none;">Enter Discount Percentage:</label>
+            <input class="input-box-330"   type="number" name="couponValue" id="couponValue" required>
         </div>
         <div>
             <label>Enter Maximum Number of Uses:</label>
-            <input class="input-box-330" type="number" name="coupanMaximumUses" id="coupanMaximumUses" required>
+            <input class="input-box-330" type="number" name="couponMaximumUses" id="couponMaximumUses" required>
         </div>
         <div>
             <label>Select Expiry Date:</label>
-            <input class="input-box-330 min-today" type="date" name="coupanExpiryDate" id="coupanExpiryDate" required>
+            <input class="input-box-330 min-today" type="date" name="couponExpiryDate" id="couponExpiryDate" required>
         </div>
           <input type="hidden" id="id" name="id"> 
         <div style="align-items: right;">
-          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionCoupan()" >Submit</button>
+          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionCoupon()" >Submit</button>
           <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
         </div>
       </form>    
@@ -167,7 +177,7 @@
 <script>
 $( window ).on("load", function() {
     setTimeout(async function(){ 
-    $(".myTableCoupan").fancyTable({ 	
+    $(".myTableCoupon").fancyTable({ 	
         globalSearch: true,
         sortable: true,
         pagination: true, 			
@@ -185,9 +195,16 @@ $(function(){
 
 function yesnoCheck(that) {
       if (that.value == 1 || that.value == 2) {
-        $('#coupanValueDiv').show();
+        $('#couponValueDiv').show();
+        if(that.value == 1)
+        {
+          $('#disPercentage').show();
+        }
+        if(that.value == 2){
+          $('#disAmount').show();
+        }
       } else {
-        $('#coupanValueDiv').hide();
+        $('#couponValueDiv').hide();
       }
 }
 
@@ -234,20 +251,20 @@ document.querySelector("#favDialog").addEventListener('cancel', function(e) {
  
 //Qualification
 
-window.myFunctionCoupan = async function () {
-    var table = document.getElementById("myTableCoupan");
-    var coupanCode = document.getElementById("coupanCode").value;
-    var coupanDescription = document.getElementById("coupanDescription").value;
-    var coupanType = document.getElementById("coupanType").value;
-    var coupanValue = document.getElementById("coupanValue").value;
-    var coupanMaximumUses = document.getElementById("coupanMaximumUses").value;
-    var coupanExpiryDate = document.getElementById("coupanExpiryDate").value;
+window.myFunctionCoupon = async function () {
+    var table = document.getElementById("myTableCoupon");
+    var couponCode = document.getElementById("couponCode").value;
+    var couponDescription = document.getElementById("couponDescription").value;
+    var couponType = document.getElementById("couponType").value;
+    var couponValue = document.getElementById("couponValue").value;
+    var couponMaximumUses = document.getElementById("couponMaximumUses").value;
+    var couponExpiryDate = document.getElementById("couponExpiryDate").value;
     var dbID = document.getElementById("id").value;
   
     var a=table.rows.length;
     var b=table.rows.length;
     var ao;
-    const snapshot =  await getDocs(collection(db, "JobConfig", "Master", "Coupans"));
+    const snapshot =  await getDocs(collection(db, "JobConfig", "Master", "Coupons"));
     //const snapshot = await db.collection("JobConfig", "Master", "Qualifiactions").get()
     if(!snapshot.empty)
     {
@@ -260,24 +277,24 @@ window.myFunctionCoupan = async function () {
       ao =1;
     }
     let text;
-    if ((coupanCode == null || coupanCode == "") || (coupanDescription == null || coupanDescription == "") || (coupanType == null || coupanType == "") || (coupanValue == null || coupanValue == "") || (coupanMaximumUses == null || coupanMaximumUses == "") || (coupanExpiryDate == null || coupanExpiryDate == "")) {
+    if ((couponCode == null || couponCode == "") || (couponDescription == null || couponDescription == "") || (couponType == null || couponType == "") || (couponValue == null || couponValue == "") || (couponMaximumUses == null || couponMaximumUses == "") || (couponExpiryDate == null || couponExpiryDate == "")) {
       text = "Please Enter the required value.";
     } else {
       if(dbID == null || dbID == ""){
        
-          await setDoc(doc(db, "JobConfig", "Master", "Coupans",ao.toString()), {
+          await setDoc(doc(db, "JobConfig", "Master", "Coupons",ao.toString()), {
                          CreatedAt :  dateTime.toString(),
                          CreatedBy : "1",
                          UpdatedAt :  dateTime.toString(),
                          UpdatedBy : "1",
                          id: ao.toString(),
-                         Code: coupanCode.toString(),
-                         Description: coupanDescription.toString(),
-                         DiscountType: coupanType,
-                         DiscountValue: coupanValue,
-                         MaximumNOfUses: coupanMaximumUses,
+                         Code: couponCode.toString(),
+                         Description: couponDescription.toString(),
+                         DiscountType: couponType,
+                         DiscountValue: couponValue,
+                         MaximumNOfUses: couponMaximumUses,
                          NumberOfTimesUsed : 0,
-                         ExpiryDate: coupanExpiryDate,
+                         ExpiryDate: couponExpiryDate,
                         })
                          .then(()=> {  
                           setTimeout("location.reload(true);",120);
@@ -288,17 +305,17 @@ window.myFunctionCoupan = async function () {
       }
       else{
         
-           updateDoc(doc(db, "JobConfig", "Master", "Coupans", dbID.toString()), {
+           updateDoc(doc(db, "JobConfig", "Master", "Coupons", dbID.toString()), {
                          UpdatedAt :  dateTime.toString(),
                          UpdatedBy : "1",
                          id: dbID.toString(),
-                         Code: coupanCode.toString(),
-                         Description: coupanDescription.toString(),
-                         DiscountType: coupanType,
-                         DiscountValue: coupanValue,
-                         MaximumNOfUses: coupanMaximumUses,
+                         Code: couponCode.toString(),
+                         Description: couponDescription.toString(),
+                         DiscountType: couponType,
+                         DiscountValue: couponValue,
+                         MaximumNOfUses: couponMaximumUses,
                          NumberOfTimesUsed : 0,
-                         ExpiryDate: coupanExpiryDate,
+                         ExpiryDate: couponExpiryDate,
                         })
                         .then(()=> {  
                           setTimeout("location.reload(true);",120);
