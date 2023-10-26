@@ -2,7 +2,7 @@
    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
    import { getFirestore, limit } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-   import { doc, deleteDoc,setDoc, updateDoc, getDocs, collection, query, orderBy } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+   import { doc, deleteDoc,setDoc, updateDoc, getDocs, collection, query, orderBy, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
    //import $ from '/public/jquery.fancyTable-master/jquery.fancyTable-master/node_modules/jquery';
   //  import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
@@ -29,7 +29,7 @@
 var tbody= document.getElementById("tbody2");
 
 
-    function AddItemToTable1(FirstName,LastName,EmailId,MobileNo,Company, IsRegistedCompanyDetails, IsSubscription,CreatedBy,UpdatedAt,UpdatedBy,id){
+    function AddItemToTable1(FirstName,LastName,EmailId,MobileNo,Company, IsRegistedCompanyDetails, IsSubscription, ActiveStatus,CreatedBy,UpdatedAt,UpdatedBy,id){
         let trow=document.createElement("tr");
         //let td1=document.createElement("td");
         //let td2=document.createElement("td");
@@ -44,13 +44,22 @@ var tbody= document.getElementById("tbody2");
         let td11=document.createElement("td");
         let td12=document.createElement("td");
         let td13=document.createElement("td");
+        let td14=document.createElement("td");
      
         let btnq=document.createElement("button");
-        btnq.setAttribute("id", "delQ");
-        btnq.setAttribute("class", "pooa");
-        btnq.innerHTML = '<i class="fa fa-trash-o"></i>';
-        td13.appendChild(btnq);
+        btnq.setAttribute("id", "editQ");
+        btnq.setAttribute("class", "csjs");
+        btnq.innerHTML = '<i class="fas fa-edit"></i>';
+        td14.appendChild(btnq);
 
+        var status = null;
+        if(ActiveStatus == "1")
+        {
+          status = "Active";
+        }
+        else{
+          status = "Inactive";
+        }
 
         // let btn3q = document.createElement("button");
         // btn3q.setAttribute("id", "Saveq");
@@ -76,6 +85,7 @@ var tbody= document.getElementById("tbody2");
         }
         td11.innerHTML= IsRegistedCompanyDetails;
         td12.innerHTML = IsSubscription;
+        td13.innerHTML = status;
 
 
        //trow.appendChild(td1);
@@ -91,6 +101,7 @@ var tbody= document.getElementById("tbody2");
         trow.appendChild(td11);
         trow.appendChild(td12);
         trow.appendChild(td13);
+        trow.appendChild(td14);
        
         tbody.appendChild(trow);
 
@@ -126,38 +137,80 @@ var tbody= document.getElementById("tbody2");
 
       var num = String(id);
 
-      btnq.onclick = function () {
-        var result = confirm("Are you sure you want to Delete Employer Details?");
+      btnq.onclick = async function () {
+        var cert=[];
+        var q11 = query(collection(db, "UserDetails"),where("MobileNo", "==", MobileNo));
+        var querySnapshot11 = await getDocs(q11);
+        querySnapshot11.forEach((doc) => {
+            cert.push(doc.data());
+        });
+        var ActiveStatus = null;
+        var msg = null;
+        var userDetailID = null
+        cert.forEach((element,i) => {
+          userDetailID = element.UserID;
+            if(element.ActiveStatus){
+              ActiveStatus = element.ActiveStatus;
+              if(ActiveStatus == "0"){
+                ActiveStatus = "1";
+                msg = "Are  you sure you want to Enable this Candidate?";
+              }
+              else{
+                ActiveStatus = "0";
+                msg = "Are  you sure you want to Disable this Candidate?";
+              }
+            }
+            else{
+              ActiveStatus = "0";
+              msg =  msg = "Are  you sure you want to Disable this Candidate?";
+            }
+        })
+        var result = confirm(msg);
         if (result) {
-        deleteDoc(doc(db, "EmployerMaster",num))
-        .then(()=> {  
-          setTimeout("location.reload(true);",120);
-        })     
+          updateDoc(doc(db, "UserDetails", userDetailID.toString()), {
+            ActiveStatus : ActiveStatus.toString()
+          })
+           .then(()=> {  
+             setTimeout("location.reload(true);",120);
+           })     
+           .catch((error)=>{
+               console.log(error);
+           });    
         }
       };
-
 
     
     }
 
-    function AddAllItemsToTable1(candidate){
+    function AddAllItemsToTable1(candidate,status){
         tbody.innerHTML="";
         candidate.forEach((element,i) => {
-        AddItemToTable1(element.FirstName, element.LastName, element.Email.EmailId, element.Mobile.MobileNo, element.Company, element.IsRegistedCompanyDetails, element.IsSubscription, element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id);    
+        AddItemToTable1(element.FirstName, element.LastName, element.Email.EmailId, element.Mobile.MobileNo, element.Company, element.IsRegistedCompanyDetails, element.IsSubscription, status[i],element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id);    
       });
     }
 
 var cert=[];
+var status = [];
 var id=[];
 var q1 =  query(collection(db, "EmployerMaster"),orderBy("CreatedAt", "desc"));
 var querySnapshot1 =  await getDocs(q1);
-querySnapshot1.forEach((doc) => {
+querySnapshot1.forEach(async (doc) => {
   // doc.data() is never undefined for query doc snapshots
   //console.log(doc.id, " => ", doc.data());
     cert.push(doc.data());
-
+    var q11 = query(collection(db, "UserDetails"),where("MobileNo", "==", doc.data().Mobile.MobileNo));
+    var querySnapshot11 =  await getDocs(q11);
+    querySnapshot11.forEach((doc11) => {
+       if(doc11.data().ActiveStatus)
+       {
+         status.push(doc11.data().ActiveStatus);
+       }  
+       else{
+         status.push("1");
+       }
+   });
    // console.log(doc.id);
     //console.log(doc.data());
-    AddAllItemsToTable1(cert);
+    AddAllItemsToTable1(cert,status);
 
 });

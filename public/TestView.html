@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video and Images Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    #video-player {
+      width: 100%;
+    }
+    #images-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+    .image-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    .image-box img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Video and Images Page</h1>
+  </header>
+
+  <video id="video-player" controls>
+    <source src="/Testview/videos/lab_admin.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div id="images-container">
+    <!-- Dynamically load and display images -->
+  </div>
+
+  <script>
+    // Directory where images are stored
+    const imagesDirectory = '/Testview/Testorder/';
+
+    // List of image file names
+    const imageFileNames = [
+      'first.png',
+      'second.png',
+      'third.png'
+      // Add more image file names as needed
+    ];
+
+    // Function to load and display images
+    function loadImages() {
+      const imagesContainer = document.getElementById('images-container');
+
+      imageFileNames.forEach((imageName) => {
+        const imageBox = document.createElement('div');
+        imageBox.classList.add('image-box');
+
+        const img = document.createElement('img');
+        img.src = imagesDirectory + imageName;
+        img.alt = imageName;
+        
+        const title = document.createElement('p');
+        title.textContent = imageName;
+        
+        imageBox.appendChild(title);
+        imageBox.appendChild(img);
+
+        imagesContainer.appendChild(imageBox);
+      });
+    }
+
+    // Call the function to load images
+    loadImages();
+  </script>
+</body>
+</html>

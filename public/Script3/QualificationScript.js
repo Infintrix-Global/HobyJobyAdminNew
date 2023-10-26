@@ -82,6 +82,7 @@ var tbody= document.getElementById("tbody2");
         // trow.appendChild(td5);
         trow.appendChild(td6);
         trow.appendChild(td7);
+      
        
         tbody.appendChild(trow);
 
@@ -137,7 +138,7 @@ var tbody= document.getElementById("tbody2");
     }
 
     function AddAllItemsToTable1(qualification){
-        tbody.innerHTML="";
+      tbody.innerHTML="";
         qualification.forEach((element) => {
         AddItemToTable1(element.CreatedAt,element.CreatedBy,element.UpdatedAt,element.UpdatedBy,element.id,element.name);    
       });

@@ -32,6 +32,7 @@ var tbody= document.getElementById("tbody3");
 
 
     function AddItemToTable2(cat,cby,uat,uby,id,name){
+      console.log(id);
         let trow=document.createElement("tr");
        // let td1=document.createElement("td");
        // let td2=document.createElement("td");
@@ -111,7 +112,7 @@ var tbody= document.getElementById("tbody3");
         // trow.appendChild(td5);
         trow.appendChild(td6);
         trow.appendChild(td7);
-
+      
         tbody.appendChild(trow);
 
 

@@ -97,6 +97,8 @@ var tbody= document.getElementById("tbody7");
         trow.appendChild(td3);
         trow.appendChild(td4);
 
+      
+
         var num = String(cat);
         btnsp.onclick = function () {
           var result = confirm("Are you sure you want to Delete Specialization Details?");

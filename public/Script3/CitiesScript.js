@@ -88,6 +88,11 @@
       trow.appendChild(td2);
       trow.appendChild(td3);
       trow.appendChild(td4);
+
+
+
+      tbody.appendChild(trow);
+
       var num = String(cat);
 
       btnc.onclick = function () {

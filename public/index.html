@@ -8,6 +8,7 @@
 
 
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <link rel="stylesheet" type="text/css" href="Style/style.css">
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
     https://firebase.google.com/docs/web/setup#config-web-app -->
@@ -20,15 +21,16 @@
    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCja308Z_aqsX4dI7-PHQowrsAsTptrPUY",
-    authDomain: "hobyjoby-6cf7f.firebaseapp.com",
-    databaseURL: "https://hobyjoby-6cf7f-default-rtdb.firebaseio.com",
-    projectId: "hobyjoby-6cf7f",
-    storageBucket: "hobyjoby-6cf7f.appspot.com",
-    messagingSenderId: "364840624543",
-    appId: "1:364840624543:web:4bffa1591f60fff4ff9daa",
-    measurementId: "G-L5Q22RC76Z"
+    apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
+    authDomain: "hobyjoby-8b9ca.firebaseapp.com",
+    databaseURL: "https://hobyjoby-8b9ca-default-rtdb.firebaseio.com",
+    projectId: "hobyjoby-8b9ca",
+    storageBucket: "hobyjoby-8b9ca.appspot.com",
+    messagingSenderId: "755782612092",
+    appId: "1:755782612092:web:98ed2fb25735eb435985f9",
+    measurementId: "G-L23JY97GH8"
   };
+
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics();
@@ -40,18 +42,17 @@ var cert= new Array();
 const postListRef = await ref(db, "LoginPage");
 onValue(postListRef, (snapshot) => {
   const data = snapshot.val();
-  console.log(data.length);
    for(var i =0 ; i <  data.length ; i++){
         cert.push(data[i]);
    }
-  // alert(data["Name"])
+  // alert(data["Password"])
 });
 
 document.getElementById("submit1").addEventListener("click", function() {
     var  email = document.getElementById("validationCustom01").value;
     var  pass = document.getElementById("validationCustom02").value;
     var a = false;
-    for(var i =0 ; i <  cert.length ; i++){
+    for(var i =0 ; i <=  cert.length ; i++){
       if(email == String(cert[i].Name) && pass == String(cert[i].Password)){
           sessionStorage.setItem("Name", String(cert[i].Name));
           sessionStorage.setItem("Password", String(cert[i].Password));
@@ -92,28 +93,6 @@ document.getElementById("submit1").addEventListener("click", function() {
   })();
     </script>
     <title>Login</title>
-  </head>
-  <style>    
-    .sub-btn{
-      background-color: black;
-    color: white;
-    border-color: white;
-    font-size: 18px;
-    font-weight: 500;
-    }
- .sub-btn:hover{
-  background-color: black;
-  color: white;
-    border-color: white;
- }
- .sub-btn:focus{
-  background-color: black;
-  color: white;
-    border-color: white;
- }
-    
-  </style>
-  </head>
   <body>
      <!-- Example Code -->
     
@@ -121,21 +100,21 @@ document.getElementById("submit1").addEventListener("click", function() {
       
         <div class="row justify-content-center">
           <div class="col-md-8">
-            <div style="background-color: black;padding: 3em 0em 8em 0em; margin-top: 8em; border-radius: 10px; box-shadow: 0px 0px 90px gray;">
+            <div >
               <!-- <h1 class="text-center" style="color: white;">Login</h1> -->
               <div class="row text-center">
                 <div class="col">
-                  <img src="logoimage.png" alt="" class="">
+                  <img src="logoimage.png" alt="" class="logoimg">
               </div>
             </div>
               <form class="row g-3 needs-validation justify-content-center mt-4" novalidate="">
                 <div class="col-md-8 mt-4">
-                  <label for="validationCustom01" class="form-label" style="color: white;"> Username</label>
+                  <label for="validationCustom01" class="form-label" > Username</label>
                   <input type="text" class="form-control p-3 username" id="validationCustom01"  required="">
                   <div class="invalid-feedback">
                     Enter Username!
                   </div>
-                  <div class="row mt-4"><div class="col"><label for="validationCustom01" class="form-label" style="color: white;">Password</label>
+                  <div class="row mt-4"><div class="col"><label for="validationCustom01" class="form-label" >Password</label>
                     <input type="password" class="form-control p-3 passwordt" id="validationCustom02"  required="">
                     <div class="invalid-feedback">
                      Enter Password!

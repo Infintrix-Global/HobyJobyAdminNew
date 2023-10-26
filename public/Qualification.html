@@ -1,294 +1,266 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Master Panel</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <!-- styles-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<link rel="stylesheet" type="text/css" href="CssPage1.css">
+
+    <!--scripts>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="module" src="Script3/QualificationScript.js"></script>
-    <script type = "text/javascript" src="jQuery.js"></script>
+    <script type="text/javascript" src="jQuery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="src/fancyTable.js"></script>
+    <script type="text/javascript" src="/public/pagesort.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/n pm/jquery.fancytable/dist/fancyTable.min.js"></script>
+    <script src="src/fancyTable.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-
-
-
-
-<link href=
-"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-         rel="stylesheet">
-         <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-
-<!-- <script src="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"></script> -->
-<!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="src/fancyTable.js"></script>
-
-<script type="text/javascript" src="/public/pagesort.js"></script>
-
-
-<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
-<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
-<script src="https://cdn.jsdelivr.net/n pm/jquery.fancytable/dist/fancyTable.min.js"></script> 
-<script src="src/fancyTable.js"></script>
-
-  </head>
-  <body style="color: white !important;">
+</head>
+<body>
     <!-- code for the master page -->
     <div id="wrapper" class="toggled">
-      <div id="sidebar-wrapper">
-        <div class="logo">
-          <img src="logoimage.png" class="logoimg" alt="">
+        <div id="sidebar-wrapper">
+            <div class="logo">
+                <img src="logoimage.png" class="logoimg" alt="">
+            </div>
+
+            <div class="vertical-menu">
+                <a href="#home" >Dashboard</a>
+
+                <div class="subnav-content">
+                    <a href="Certification.html">Certification</a>
+                    <a href="JobTypes.html">Job Types</a>
+                    <a class="active" href="Qualification.html">Qualification</a>
+                    <a href="FunctionalArea.html">Functional Area</a>
+                    <a href="Cities.html">Cities</a>
+                    <a href="Skills.html">Skills</a>
+                    <a href="Specialization.html">Specialization</a>
+                    <a href="PackageMaster.html">PackageMaster</a>
+                    <a href="CouponMaster.html">Coupon Master</a>
+                    <a href="EmployerMaster.html">Employer Master</a>
+                    <a href="CandidateMaster.html">Candidate Master</a>
+                    <a href="SubscriptionMaster.html">Subscription Master</a>
+                    <a href="ChangePassword.html">Change Password</a>
+                </div>
+                <div class="subnav-content">
+                    <a href="#home">Reports</a>
+                </div>
+                <a href="#contact">Contact</a>
+            </div>
+            
         </div>
-          <ul class="sidebar-nav">
-             <li>
-                <button style="text-align: left; background-color:transparent;border: none; color: white;" onclick="location.href = 'Certification.html'" id="defaultOpen">Certification</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none; margin-top: 20px; color: white;"  onclick="location.href = 'JobTypes.html'" id="defaultOpen">JobTypes</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Qualification.html'" id="defaultOpen2">Qualification</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Skills.html'" id="defaultOpen3">Skills</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'FunctionalArea.html'" id="defaultOpen4">Functional Area</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Cities.html'" id="defaultOpen5">Cities</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'Specialization.html'" id="defaultOpen6">Specialization</button>
-              </li>
-              <li>
-                <button class="dropbtn" style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'BlogMaster.html'" id="defaultOpen7">Blog Master</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'PackageMaster.html'" id="defaultOpen8">Package Master</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'CouponMaster.html'" id="defaultOpen8">Coupon Master</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'EmployerMaster.html'" id="defaultOpen8">Employer Master</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'CandidateMaster.html'" id="defaultOpen8">Candidate Master</button>
-              </li>
-              <li>
-                <button style="text-align: left; background-color:transparent;border: none;color: white;margin-top: 20px;" onclick="location.href = 'ChangePassword.html'" id="defaultOpen9">Change Password</button>
-              </li>
-          </ul>
-      </div>
 
-  <!-- jobtypes-->
-  <div id="qualification" class="tabcontent">
-    <a href="#menu-toggle1" style="background-color: #454d55;"  class="tgl-btn" id="menu-toggle1"><i style="color: white; border-top-left-radius:0px" class="fa fa-bars"></i></a>
-    <button type="button" style="color: white;" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
-    <div id="page-content-wrapper">
-      <div class="m-1">
-        <button style="float: right;margin-top: 60px;color: white;" type="button" class="btn add-btn" onclick="openForm()"><i class="fa fa-plus"></i> Add New</button>
-      </div>
-      <div class="container-fluid">
-        <h1 style="color: white;">Qualification</h1>
-        <table id="myTableQual" class="table myTableQual" style="column-width: 1px;">
-          <thead>
-              <tr style="color: white;">
-                  <!-- <th>Id</th> 
-                  <th>Created At</th>
-                  <th>Created By</th>
-                  <th>Updated At</th>
-                  <th>Updated By</th> -->
-                  <th>Name</th>
-                  <th>Action</th>
-              </tr>
-          </thead>
-          <tbody id="tbody2" style="color: white;">
-          </tbody>
-      </table>
-          
-      </div>
-      <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
-      <form method="dialog">
-        <div>
-          <label>Enter Qualification Name:</label>
-          <input class="input-box-330" type="text" name="qualificationName" id="qualificationName" required>
-        </div>
-          <input type="hidden" id="id" name="id"> 
-        <div style="align-items: right;">
-          <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionQual()" >Submit</button>
-          <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
-        </div>
-      </form>    
-      </dialog>
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script> 
-<script>
-$( window ).on("load", function() {
-    setTimeout(async function(){ 
-  $(".myTableQual").fancyTable({ 	
-    globalSearch: true,
-    sortable: true,
-    pagination: true, 			
-    perPage:5, 	
-    sortColumn: 2,		
-  });
-}, 1000);
-});
-
-function openForm() {
-  document.querySelector("#favDialog").showModal();
-}
-
-function closeForm() {
-  document.querySelector("#favDialog").close();
-  location.reload(true);
-}
-
-document.querySelector("#favDialog").addEventListener('cancel', function(e) {
-	e.preventDefault();
-});
-
-</script>
-
-
-  
-  <script type="module">
     
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore, Timestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { doc, deleteDoc,setDoc, getDoc, getDocs, collection, addDoc, query, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+        <!-- jobtypes-->
+        <div id="qualification" class="tabcontent">
+            <a href="#menu-toggle1"  class="tgl-btn" id="menu-toggle1"><i class="fa fa-bars"></i></a>
+            <button type="button" class="btn add-btn" onclick="Logoutfunc()"><i class="fa fa-power-off"></i></button>
+            <div id="page-content-wrapper">
+                <div class="m-1">
+                    <button  type="button" class="btn add-btn" onclick="openForm()"><i class="fa fa-plus"></i> Add New</button>
+                </div>
+                <div class="container-fluid">
+                    <h1 style="color: Black; margin-bottom: 20px;">Qualification</h1>
+                    <table id="myTableQual" class="table myTableQual" style="column-width: 1px;">
+                        <thead>
+                            <tr>
+                                <!-- <th>Id</th>
+                                <th>Created At</th>
+                                <th>Created By</th>
+                                <th>Updated At</th>
+                                <th>Updated By</th> -->
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody2">
+                        </tbody>
+                    </table>
 
-    const firebaseConfig = {
-  apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
-  authDomain: "hobyjoby-8b9ca.firebaseapp.com",
-  projectId: "hobyjoby-8b9ca",
-  storageBucket: "hobyjoby-8b9ca.appspot.com",
-  messagingSenderId: "755782612092",
-  appId: "1:755782612092:web:98ed2fb25735eb435985f9",
-  measurementId: "G-L23JY97GH8"
-};
-    
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const db = getFirestore(app);
+                </div>
+                <dialog id="favDialog" style="position:absolute; bottom: auto; width: fit-content; height: fit-content;">
+                    <form method="dialog">
+                        <div>
+                            <label>Enter Qualification Name:</label>
+                            <input class="input-box-330" type="text" name="qualificationName" id="qualificationName" required>
+                        </div>
+                        <input type="hidden" id="id" name="id">
+                        <div style="align-items: right;">
+                            <button type="submit" id="subbut" class="sub-btn" onclick="myFunctionQual()">Submit</button>
+                            <input id="cancelButton" style="background-color: white; color:black; margin-left: 10px;" class="sub-btn" onClick="closeForm()" type="button" value="Cancel">
+                        </div>
+                    </form>
+                </dialog>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
+        <script>
+            $(window).on("load", function () {
+                setTimeout(async function () {
+                    $(".myTableQual").fancyTable({
+                        globalSearch: true,
+                        sortable: true,
+                        pagination: true,
+                        perPage: 5,
+                        sortColumn: 2,
+                    });
+                }, 1000);
+            });
 
-      var dateTime = new Date().toLocaleString().replace(',','');
+            $('#MasterOpen').on('click', function () {
+                $("#MasterSubMenu").show();
+            });
+            $('#DashboardOpen').on('click', function () {
+                $("#MasterSubMenu").hide();
+            });
+            $('#ReportsOpen').on('click', function () {
+                $("#MasterSubMenu").hide();
+            });
 
- 
-//Qualification
+            function openForm() {
+                document.querySelector("#favDialog").showModal();
+            }
 
-window.myFunctionQual = async function () {
-    var table = document.getElementById("myTableQual");
-    var qualificationName = document.getElementById("qualificationName").value;
-    var dbID = document.getElementById("id").value;
-  
-    var a=table.rows.length;
-    var b=table.rows.length;
-    var ao;
-    const snapshot =  await getDocs(collection(db, "JobConfig", "Master", "Qualifiactions"));
-    //const snapshot = await db.collection("JobConfig", "Master", "Qualifiactions").get()
-    if(!snapshot.empty)
-    {
-      const ids = snapshot.docs.map(doc => (!isNaN(parseInt((doc.id) ? doc.id : '0'))) ? parseInt((doc.id) ? doc.id : '0') : 0)
-      const max = Math.max(...ids);
-      ao = parseInt(max) + 1;
-    }
-    if(ao == null)
-    {
-      ao =1;
-    }
-    let text;
-    if (qualificationName == null || qualificationName == "") {
-      text = "Please Enter the required value.";
-    } else {
-      if(dbID == null || dbID == ""){
-       
-          await setDoc(doc(db, "JobConfig", "Master", "Qualifiactions",ao.toString()), {
-                         CreatedAt :  dateTime.toString(),
-                         CreatedAtTimestamp : Timestamp.fromDate(new Date()),
-                         CreatedBy : "1",
-                         UpdatedAt :  dateTime.toString(),
-                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
-                         UpdatedBy : "1",
-                         id: ao.toString(),
-                         name: qualificationName.toString()
+            function closeForm() {
+                document.querySelector("#favDialog").close();
+                location.reload(true);
+            }
+
+            document.querySelector("#favDialog").addEventListener('cancel', function (e) {
+                e.preventDefault();
+            });
+
+        </script>
+
+
+
+        <script type="module">
+
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+            import { getFirestore, Timestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+            import { doc, deleteDoc, setDoc, getDoc, getDocs, collection, addDoc, query, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAADC0o-0zy-R8WWzSY4hq_ckhLzNv6CHM",
+                authDomain: "hobyjoby-8b9ca.firebaseapp.com",
+                projectId: "hobyjoby-8b9ca",
+                storageBucket: "hobyjoby-8b9ca.appspot.com",
+                messagingSenderId: "755782612092",
+                appId: "1:755782612092:web:98ed2fb25735eb435985f9",
+                measurementId: "G-L23JY97GH8"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getFirestore(app);
+
+            var dateTime = new Date().toLocaleString().replace(',', '');
+
+
+            //Qualification
+
+            window.myFunctionQual = async function () {
+                var table = document.getElementById("myTableQual");
+                var qualificationName = document.getElementById("qualificationName").value;
+                var dbID = document.getElementById("id").value;
+
+                var a = table.rows.length;
+                var b = table.rows.length;
+                var ao;
+                const snapshot = await getDocs(collection(db, "JobConfig", "Master", "Qualifiactions"));
+                //const snapshot = await db.collection("JobConfig", "Master", "Qualifiactions").get()
+                if (!snapshot.empty) {
+                    const ids = snapshot.docs.map(doc => (!isNaN(parseInt((doc.id) ? doc.id : '0'))) ? parseInt((doc.id) ? doc.id : '0') : 0)
+                    const max = Math.max(...ids);
+                    ao = parseInt(max) + 1;
+                }
+                if (ao == null) {
+                    ao = 1;
+                }
+                let text;
+                if (qualificationName == null || qualificationName == "") {
+                    text = "Please Enter the required value.";
+                } else {
+                    if (dbID == null || dbID == "") {
+
+                        await setDoc(doc(db, "JobConfig", "Master", "Qualifiactions", ao.toString()), {
+                            CreatedAt: dateTime.toString(),
+                            CreatedAtTimestamp: Timestamp.fromDate(new Date()),
+                            CreatedBy: "1",
+                            UpdatedAt: dateTime.toString(),
+                            UpdatedAtTimestamp: Timestamp.fromDate(new Date()),
+                            UpdatedBy: "1",
+                            id: ao.toString(),
+                            name: qualificationName.toString()
                         })
-                         .then(()=> {  
-                          setTimeout("location.reload(true);",120);
-                        })     
-                        .catch((error)=>{
-                            console.log(error);
-                        }); 
-      }
-      else{
-        
-           updateDoc(doc(db, "JobConfig", "Master", "Qualifiactions", dbID.toString()), {
-                         UpdatedAt :  dateTime.toString(),
-                         UpdatedAtTimestamp : Timestamp.fromDate(new Date()),
-                         UpdatedBy : "1",
-                         id: dbID.toString(),
-                         name: qualificationName.toString()
+                            .then(() => {
+                                setTimeout("location.reload(true);", 120);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
+                    else {
+
+                        updateDoc(doc(db, "JobConfig", "Master", "Qualifiactions", dbID.toString()), {
+                            UpdatedAt: dateTime.toString(),
+                            UpdatedAtTimestamp: Timestamp.fromDate(new Date()),
+                            UpdatedBy: "1",
+                            id: dbID.toString(),
+                            name: qualificationName.toString()
                         })
-                        .then(()=> {  
-                          setTimeout("location.reload(true);",120);
-                        })     
-                        .catch((error)=>{
-                            console.log(error);
-                        }); 
-      }
+                            .then(() => {
+                                setTimeout("location.reload(true);", 120);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
 
-    }
-}
-  
-window.Logoutfunc = function(){
-    if (confirm("Are you sure you want to log out?") == true) {
-      window.location.replace("index.html");
+                }
+            }
 
-    } else {
-        window.location.reload();
-    }
-   
-  }
-  
-  
+            window.Logoutfunc = function () {
+                if (confirm("Are you sure you want to log out?") == true) {
+                    window.location.replace("index.html");
+
+                } else {
+                    window.location.reload();
+                }
+
+            }
+
+
 // window.texteditor = function(){
-//   var holder = document.getElementById("example2");  
+//   var holder = document.getElementById("example2");
 //     const editor = new EditorJS({
 //     /**
 //      * Id of Element that should contain Editor instance
 //      */
 //     holder: 'editorjs'
 //   });
-// }                                                               
-  </script>
+// }
+        </script>
 
 
-  </body>
+</body>
 </html>

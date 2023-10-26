@@ -74,6 +74,7 @@ var tbody = document.getElementById("tbodygmas");
   //trow.appendChild(td6);
   // trow.appendChild(td7);
   trow.appendChild(td8);
+
   tbody.appendChild(trow);
 
   $(document).ready(function() {
@@ -157,13 +158,19 @@ var querySnapshot =  await getDocs(q);
 
   cert.push(doc.data());
   id.push(doc.id);
- 
-
-  var q1 = query(collection(db, "EmployerMaster"),where("UserID","==",doc.data().EmployerId));
+  var companyid = doc.data().CompanyId;
+  var q1 = query(collection(db, "EmployerMaster"));
   var querySnapshot1 = await getDocs(q1);
   querySnapshot1.forEach((doc) => {
-    emp.push(doc.data().FirstName.toLocaleString() + " " + doc.data().LastName.toLocaleString());
-    });
+    if(doc.data().Company.length > 0){
+     for(var i = 0; i < doc.data().Company.length; i ++)
+     {
+      if(companyid == doc.data().Company[i].CompanyId){
+        emp.push(doc.data().Company[i].CompanyName.toLocaleString());
+      }
+     }
+    }
+  });
     
     AddAllItemsToTable7(cert,id,emp);
 

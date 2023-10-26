@@ -1,0 +1,193 @@
+body {
+    background-color: white;
+}
+h1 {
+    color: black;
+}
+p {
+    color: black;
+}
+
+td{
+    border-color: black;
+    border-width: 1px;
+}
+
+th{
+    border-color: black;
+    border-width: 1px;
+}
+
+.loginbtn {
+    border: 1px solid !important;
+    margin-bottom: 0px;
+    background-color: #04AA6D;
+    color: white;
+    width: 100% !important;
+    padding: 1rem !important;
+}
+
+.menubutton 
+{
+    margin-top:20px;
+    text-align: left;
+    background-color:transparent;
+    border: none; 
+    color: white; 
+    font-size: 1.25em;
+
+}
+
+.vertical-menu {
+    width: 250px; /* Set a width if you like */
+}
+
+    .vertical-menu a {
+        background-color: #eee; /* Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+    }
+
+        .vertical-menu a:hover {
+            background-color: #ccc; /* Dark grey background on mouse-over */
+        }
+
+        .vertical-menu a.active {
+            background-color: #04AA6D; /* Add a green color to the "active/current" link */
+            color: white;
+        }
+
+
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+#sidebar-wrapper {
+    overflow-x: hidden;
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    /* background: #000; */
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 0;
+    }
+
+#wrapper.toggled {
+            padding-left: 250px;
+        }
+
+#sidebar-wrapper {
+        width: 0;
+    }
+
+#wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+
+#page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+#wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+.sub-btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 6px;
+    border-color: white;
+    border-color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.sub-btn:hover {
+        background-color: black;
+        color: white;
+        border-color: white;
+    }
+
+.sub-btn:focus {
+        background-color: black;
+        color: white;
+        border-color: white;
+    }
+.btn {
+    border: 1px solid !important;
+    margin-bottom: 0px;
+    background-color: #04AA6D;
+    color:white;
+}
+
+
+.add-btn {
+    float: right;
+    margin-inline-end: 10px;
+}
+
+.tgl-btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: #04AA6D;
+    border-bottom-right-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.logoimg {
+     width: 250px;
+      background-color: #04AA6D;
+}

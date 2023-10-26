@@ -116,6 +116,7 @@
       // trow.appendChild(td8);
       trow.appendChild(td9);
       trow.appendChild(td10);
+      
       var num = String(cat);
 
       btnpa.onclick = function () {

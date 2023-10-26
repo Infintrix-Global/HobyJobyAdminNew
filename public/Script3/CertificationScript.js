@@ -78,8 +78,7 @@ const db = getFirestore(app);
      
       tbody.appendChild(trow);
 
-
-
+      
       $(document).ready(function() {
         $("#delQ").css("background-color", "red");
         $("#delQ").css("color", "white");
